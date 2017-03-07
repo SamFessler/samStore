@@ -1,0 +1,28 @@
+﻿<!-- needed to pass info from studnet controller to the view this will take json data and format it to html
+    This will use razer code
+-->
+<!--declare what type of model is being used-->
+@model IEnumerable<samStore.Models.StudentModel>
+
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+<table class="table table-striped">
+    <!--type is declared above-->
+    @foreach (var student in Model)
+    {
+        <tr>
+            <td>@student.Id</td>
+            <td>@student.FirstName</td>
+            <td>@student.LastName</td>
+            <td>@student.FavoriteFood</td>
+        </tr>
+
+    }
+
+</table>
+
+
