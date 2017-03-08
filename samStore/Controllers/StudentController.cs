@@ -11,7 +11,7 @@ namespace samStore.Controllers
     {
 
 
-        private List<StudentModel> students = new List<StudentModel>();
+        private static List<StudentModel> students = new List<StudentModel>();
 
         // GET: Student
         //can pass in paramaters and change output
@@ -19,9 +19,11 @@ namespace samStore.Controllers
         // to include ID 2
         // /student/index/Ralph?id2=erica
         // passing in int variables the must be nulled using ? to allow no data to be passed in
-        public ActionResult Index(string id, string id2)
+        //
+        // leave controller return type as ActionResult most always so that it is possible to return all types of result classes see notes
+        public ActionResult Index(string id, string format = "html")
         {
-            if(students.Count == 0 )
+            if (students.Count == 0)
             {
                 students.Add(new StudentModel { Id = 1, FirstName = "Ralph", LastName = "Comb", FavoriteFood = "coffee" });
                 students.Add(new StudentModel { Id = 2, FirstName = "JinSeong", LastName = "Kim", FavoriteFood = "apples" });
@@ -30,13 +32,40 @@ namespace samStore.Controllers
                 students.Add(new StudentModel { Id = 5, FirstName = "Will", LastName = "Mabry", FavoriteFood = "Ice-Cream" });
                 students.Add(new StudentModel { Id = 6, FirstName = "Joe", LastName = "Johnson", FavoriteFood = "Nachos" });
             }
+
+            if (format == "html")
+            {
+                return View(students);
+            }
+            if (format == "text")
+            {
+                return Content(string.Join(",", students.Select(x => x.FirstName)));
+            }
+            if (format == "json")
+            {
+                return Json(students, JsonRequestBehavior.AllowGet);
+            }
+
             //takes model and passes it to the appopriate view document
             return View(students);
         }
 
-        public ActionResult GetMoreCoffee()
+        [HttpGet]
+        public ActionResult Edit(int? id)
         {
-            return Json("Im going to get more coffee", JsonRequestBehavior.AllowGet);
+            return View(students.First(x => x.Id == id));
+        }
+
+        [HttpPost]
+        public ActionResult Edit(StudentModel model)
+        {
+            var student = students.FirstOrDefault(x => x.Id == model.Id);
+
+            student.FirstName = model.FirstName;
+            student.LastName = model.LastName;
+            student.FavoriteFood = model.FavoriteFood;
+
+            return RedirectToAction("Index", new { edited = true });
         }
     }
 }

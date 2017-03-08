@@ -1,0 +1,51 @@
+﻿@model samStore.Models.StudentModel
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+@using (Html.BeginForm())
+{
+    @*html helper razer class to fix typos for form submission*@
+    @*add class to razer html by adding , new Class="classnamehere"*@
+
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.FirstName, new { @class = "form-label" })
+        @Html.TextBoxFor(x => x.FirstName, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.LastName, new { @class = "form-label" })
+        @Html.TextBoxFor(x => x.LastName, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.FavoriteFood, new { @class = "form-label" })
+        @Html.TextBoxFor(x => x.FavoriteFood, new { @class = "form-control" })
+    </div>
+    @Html.HiddenFor(x => x.Id)
+
+
+    <!--This is the direct way to code in the input for form but is prone to typos use format above-->
+
+    @*<input type="text" name="FirstName" value="@Model.FirstName"/>
+        <input type="text" name="LastName" value="@Model.LastName" />
+        <input type="text" name="FavoriteFood" value="@Model.FavoriteFood" />
+        <input type="hidden" name="Id" value="@Model.Id" />
+        <input type="submit" />*@
+
+
+
+}
+
+    @*<form method="post">
+    
+    </form>
+    
+    above form can also be declared using the html form tags but is by default a get action method, post declaration is neccsearry*@
+    
+
+
+
+
+
+

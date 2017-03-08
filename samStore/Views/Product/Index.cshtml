@@ -1,0 +1,45 @@
+﻿@model samStore.Models.ProductModel
+
+@{
+
+
+    ViewBag.Title = "Index";
+}
+
+<div class="row">
+
+    <div class="col-xs-4">
+        @foreach (var img in Model.TreeImage)
+        {
+            <img src="@img" style="max-width:100%" />
+        }
+    </div>
+
+
+    <div col-xs-8>
+
+
+        <div class="well">
+            <h2>@Model.TreeName</h2>
+            <p>@Model.TreeSpecies</p>
+            <p>@Model.TreePrice.ToString("C")</p>
+            <p>@Model.TreeType</p>
+            <br />
+            <p>@Model.TreeDescription</p>
+
+            <!--add to cart button-->
+            @using (Html.BeginForm())
+            {
+                <input type="hidden" value="@Model.Id" />
+                @Html.HiddenFor(x => x.Id)
+                @Html.HiddenFor(x => x.TreeName)
+                @Html.HiddenFor(x => x.TreePrice)
+                @Html.HiddenFor(x => x.TreeType)
+                @Html.HiddenFor(x => x.TreeDescription)
+                <input type="submit" class="btn btn-default" value="Add to Cart" />
+            }
+        </div>
+    </div>
+
+</div>
+
