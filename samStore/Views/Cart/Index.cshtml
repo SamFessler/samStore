@@ -5,6 +5,13 @@
 }
 
 <h2>Cart</h2>
+
+@if (TempData["AddedToCart"] != null)
+{
+    <div class="alert-success">
+        <p>Success</p>
+    </div>
+}
 <table class="table">
     <thead>
         <tr>

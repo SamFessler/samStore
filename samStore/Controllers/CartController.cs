@@ -13,29 +13,30 @@ namespace samStore.Controllers
         public ActionResult Index()
         {
             CartModel model = new CartModel();
-            if(Request.Cookies["ProductId"] != null)
+            List<ProductModel> cart = Session["Cart"] as List<ProductModel>;
+            if(cart == null)
             {
-                model.Items = new CartItemModel[]
+                cart = new List<ProductModel>();
+            }
+
+            ViewBag.ItemsInCart = 0;
+            model.Items = new CartItemModel[cart.Count];
+            model.SubTotal = 0;
+            for (int i = 0; i < cart.Count; i++)
+            {
+                model.Items[i] = new CartItemModel
                 {
-                    new CartItemModel
-                    {
-                        Product = new ProductModel
-                        {
-                            Id = int.Parse(Request.Cookies["ProductID"].Value),
-                            TreeName = Request.Cookies["ProductName"].Value,
-                            TreePrice = decimal.Parse(Request.Cookies["ProductPrice"].Value),
-                        },
-                        Quantity = 1
-                    }
+                    Product = cart[i],
+                    Quantity = 1
+
                 };
 
-                model.SubTotal = model.Items[0].Quantity * model.Items[0].Product.TreePrice;
+                model.SubTotal += (model.Items[i].Product.TreePrice) * (model.Items[i].Quantity);
+                ViewBag.ItemsInCart++;//TODO needs to be run many places
             }
-            else
-            {
-                model.Items = new CartItemModel[0];
-                model.SubTotal = 0;
-            }
+
+
+           
             return View(model);
         }
     }

@@ -3,27 +3,7 @@
 @{
     ViewBag.Title = "Checkout";
 
-    var Countries = new List<SelectListItem>
-    {
-        new SelectListItem() {Text="",Value="" },
-        new SelectListItem() {Text = "USA", Value ="USA" },
-        new SelectListItem() {Text = "Canada", Value ="Canada" }
-    };
 
-    var finalstates = new List<SelectListItem>
-    {
-
-    };
-    var statesCanada = new List<SelectListItem>
-    {
-        new SelectListItem { Value = "QB", Text = "Qubeck" },
-        new SelectListItem { Value = "AK", Text = "Alaska" },
-        new SelectListItem { Value = "AZ", Text = "Arizona" },
-        new SelectListItem { Value = "AR", Text = "Arkansas" },
-        new SelectListItem { Value = "CA", Text = "California" },
-
-
-    };
 
     var statesUSA = new List<SelectListItem> {
                     new SelectListItem { Value = "AL", Text = "Alabama" },
@@ -93,7 +73,7 @@
         @Html.ValidationSummary(false, null, new { @class = "alert alert-danger" })
     }
 
-
+    <div><p>Shipping is domestic USA only</p></div>
     <div class="form-group">
         @Html.LabelFor(x => x.ShippingAddress1, new {@class="control-label"})
         @Html.TextBoxFor(x => x.ShippingAddress1, new { @class = "form-control" })
@@ -114,11 +94,6 @@
         @Html.ValidationMessageFor(x => x.ShippingState)
     </div>
     <div class="form-group">
-        @Html.LabelFor(x => x.ShippingCountry, new { @class = "control-label" })
-        @Html.DropDownListFor(x => x.ShippingCountry, Countries, new { @class = "form-control" })
-        @Html.ValidationMessageFor(x => x.ShippingCountry)
-    </div>
-    <div class="form-group">
         @Html.LabelFor(x => x.ShippingZip, new { @class = "control-label" })
         @Html.TextBoxFor(x => x.ShippingZip, new { @class = "form-control" })
         @Html.ValidationMessageFor(x => x.ShippingZip)
@@ -126,28 +101,4 @@
     <input type="submit" value="Place Order" class="btn btn-danger" />
 }
 
-@section Scripts{
-    <script type="text/javascript">
-        $(document).ready(function ()
-        {
-            $
-
-            $("#ShippingCountry").change(function ()
-            {
-                if (this.value == "USA")
-                {
-                    @finalstates === @statesUSA 
-                }
-                else if (this.value == "Canada")
-                {
-
-                }
-            })
-
-
-        })
-        
-    </script>
-    
-    }
 

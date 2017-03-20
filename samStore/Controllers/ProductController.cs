@@ -58,9 +58,21 @@ namespace samStore.Controllers
         public ActionResult Index(ProductModel model)
         {
 
-            this.Response.SetCookie(new HttpCookie("ProductName", "-1"));
-            this.Response.SetCookie(new HttpCookie("ProductId", model.Id.ToString()));
-            this.Response.SetCookie(new HttpCookie("ProductPrice", model.TreePrice.ToString()));
+            List<ProductModel> cart = this.Session["Cart"] as List<ProductModel>;
+            if(cart == null)
+            {
+                cart = new List<ProductModel>();
+            }
+
+            cart.Add(model);
+            this.Session.Add("Cart", cart);
+
+            //repalced by using session to pass cart model
+            //this.Response.SetCookie(new HttpCookie("ProductName", "-1"));
+            //this.Response.SetCookie(new HttpCookie("ProductId", model.Id.ToString()));
+            //this.Response.SetCookie(new HttpCookie("ProductPrice", model.TreePrice.ToString()));
+
+            TempData.Add("AddedToCart", true);
 
             return RedirectToAction("Index", "Cart");
         }
