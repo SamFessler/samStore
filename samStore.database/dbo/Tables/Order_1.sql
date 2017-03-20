@@ -1,9 +1,10 @@
 ﻿CREATE TABLE [dbo].[Order]
 (
 	[ID] INT IDENTITY(1,1) NOT NULL,
+	[OrderNumber] UNIQUEIDENTIFIER DEFAULT NewID(),
 	[Inventory] INT NOT NULL,
-	[CreatedDate] DateTime2 NOT NULL DEFAULT getUtcDate(),
-	[ModifiedDate] DateTime2 NOT NULL DEFAULT getUtcdate(),
+	[CreatedDate] DateTime NOT NULL DEFAULT getUtcDate(),
+	[ModifiedDate] DateTime NOT NULL DEFAULT getUtcdate(),
 
 	[PurchaserEmail] NVARCHAR(1000) NULL,
 	[Completed] DATETIME NULL,

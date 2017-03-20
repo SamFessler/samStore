@@ -70,10 +70,10 @@
     <Build Include="dbo\Tables\Order_1.sql" />
     <Build Include="dbo\Tables\Product_1.sql" />
     <Build Include="dbo\Tables\ProductImage.sql" />
-    <Build Include="dbo\Tables\Catagory.sql" />
-    <Build Include="dbo\Tables\CatagoryProduct_1.sql" />
     <Build Include="dbo\Tables\OrderProduct_1.sql" />
     <Build Include="dbo\Tables\Review_1.sql" />
+    <Build Include="dbo\Tables\Category_1.sql" />
+    <Build Include="dbo\Tables\CategoryProduct.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="dbo\Scripts\Script.PostDeployment1.sql" />

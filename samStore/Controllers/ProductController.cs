@@ -33,7 +33,7 @@ namespace samStore.Controllers
                     TreeName = "Monterey cypress",
                     TreeSpecies = "Cupressus macrocarpa",
                     TreeType = "cypress",
-                    TreeImage = new string[] { "/Content/Images/montreyCypress.jpg" },
+                    TreeImage = new string[] { "" },
                     TreePrice = 40.5M,
                     TreeDescription = "The Monterey cypress is a species of cypress native to the Central Coast of California." });
 
