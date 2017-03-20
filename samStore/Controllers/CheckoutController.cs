@@ -25,7 +25,7 @@ namespace samStore.Controllers
             if(ModelState.IsValid)
             {
                 //validated
-                //todo persist this order to the database and redirect to reciept page
+                //TODO persist this order to the database and redirect to reciept page
             }
             else
             {

@@ -1,0 +1,10 @@
+﻿CREATE TABLE [dbo].[Product]
+(
+	[ID] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+	[ProductID] Int NOT NULL,
+	[PATH] NVARCHAR (100) NOT NULL,
+	CONSTRAINT [PK_ProductImage] PRIMARY 
+
+
+
+)

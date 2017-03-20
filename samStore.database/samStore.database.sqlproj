@@ -65,10 +65,15 @@
     <Folder Include="dbo\Scripts" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="dbo\Tables\Addresses.sql" />
-    <Build Include="dbo\Tables\Policies.sql" />
-    <Build Include="dbo\Tables\Users.sql" />
     <Build Include="dbo\Stored Procedures\sp_SearchUsers.sql" />
+    <Build Include="dbo\Tables\Address_1.sql" />
+    <Build Include="dbo\Tables\Order_1.sql" />
+    <Build Include="dbo\Tables\Product_1.sql" />
+    <Build Include="dbo\Tables\ProductImage.sql" />
+    <Build Include="dbo\Tables\Catagory.sql" />
+    <Build Include="dbo\Tables\CatagoryProduct_1.sql" />
+    <Build Include="dbo\Tables\OrderProduct_1.sql" />
+    <Build Include="dbo\Tables\Review_1.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="dbo\Scripts\Script.PostDeployment1.sql" />
