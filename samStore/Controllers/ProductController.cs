@@ -16,42 +16,65 @@ namespace samStore.Controllers
         // GET: Product
         public ActionResult Index(int? id)
         {
-            if (Trees.Count == 0)
+            using (SamStoreEntities entities = new SamStoreEntities())
             {
+                var product = entities.Products.Find(id);
+                if (product != null)
+                {
+                    ProductModel model = new ProductModel();
+                    model.Id = product.ID;
+                    model.TreeDescription = product.ProductDescription;
+                    model.TreePrice = product.ProductPrice;
+                    model.TreeName = product.ProductName;
+                    model.TreeImage = product.ProductImages.Select(x => x.ImagePath).ToArray();
 
-                Trees.Add(new ProductModel {
-                    Id = 1,
-                    TreeName = "Japanese Black Pine",
-                    TreeSpecies = "Pinus thunbergii",
-                    TreeType = "coniferous",
-                    TreeImage = new string[]{ "/Content/Images/japaneseBlackPine.jpg" },
-                    TreePrice = 25.00M,
-                    TreeDescription ="This is an amazing tree" });
+                    return View(model);
+                }
+                else
+                {
+                    return HttpNotFound();
+                }
 
-                Trees.Add(new ProductModel {
-                    Id = 2,
-                    TreeName = "Monterey cypress",
-                    TreeSpecies = "Cupressus macrocarpa",
-                    TreeType = "cypress",
-                    TreeImage = new string[] { "" },
-                    TreePrice = 40.5M,
-                    TreeDescription = "The Monterey cypress is a species of cypress native to the Central Coast of California." });
 
-            }
-
-            if(id == 1)
-            {
-                return View(Trees[0]);
-            }
-            if (id == 2)
-            {
-                return View(Trees[1]);
-            }
-           else
-            {
-                return HttpNotFound();
             }
         }
+
+        //        if (Trees.Count == 0)
+        //        {
+
+        //            Trees.Add(new ProductModel {
+        //                Id = 1,
+        //                TreeName = "Japanese Black Pine",
+        //                TreeSpecies = "Pinus thunbergii",
+        //                TreeType = "coniferous",
+        //                TreeImage = new string[] { "/Content/Images/japaneseBlackPine.jpg" },
+        //                TreePrice = 25.00M,
+        //                TreeDescription = "This is an amazing tree" });
+
+        //            Trees.Add(new ProductModel {
+        //                Id = 2,
+        //                TreeName = "Monterey cypress",
+        //                TreeSpecies = "Cupressus macrocarpa",
+        //                TreeType = "cypress",
+        //                TreeImage = new string[] { "" },
+        //                TreePrice = 40.5M,
+        //                TreeDescription = "The Monterey cypress is a species of cypress native to the Central Coast of California." });
+
+        //        }
+
+        //    if(id == 1)
+        //    {
+        //        return View(Trees[0]);
+        //    }
+        //    if (id == 2)
+        //    {
+        //        return View(Trees[1]);
+        //    }
+        //   else
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //}
 
         //submit button for add to cart, Post Product
         [HttpPost]

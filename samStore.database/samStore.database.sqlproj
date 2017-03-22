@@ -65,7 +65,6 @@
     <Folder Include="dbo\Scripts" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="dbo\Stored Procedures\sp_SearchUsers.sql" />
     <Build Include="dbo\Tables\Address_1.sql" />
     <Build Include="dbo\Tables\Order_1.sql" />
     <Build Include="dbo\Tables\Product_1.sql" />
@@ -74,6 +73,12 @@
     <Build Include="dbo\Tables\Review_1.sql" />
     <Build Include="dbo\Tables\Category_1.sql" />
     <Build Include="dbo\Tables\CategoryProduct.sql" />
+    <Build Include="dbo\Tables\AspNetUsers.sql" />
+    <Build Include="dbo\Tables\AspNetUserRoles.sql" />
+    <Build Include="dbo\Tables\AspNetUserLogins.sql" />
+    <Build Include="dbo\Tables\AspNetUserClaims.sql" />
+    <Build Include="dbo\Tables\AspNetRoles.sql" />
+    <Build Include="dbo\Tables\__MigrationHistory.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="dbo\Scripts\Script.PostDeployment1.sql" />
