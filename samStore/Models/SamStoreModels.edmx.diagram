@@ -21,6 +21,13 @@
         <AssociationConnector Association="SamStoreModel.FK_OrderProduct_Product" />
         <AssociationConnector Association="SamStoreModel.FK_ProductImage_Product" />
         <AssociationConnector Association="SamStoreModel.FK_Review_Product" />
+        <EntityTypeShape EntityType="SamStoreModel.AspNetRole" Width="1.5" PointX="5.375" PointY="2.5" />
+        <EntityTypeShape EntityType="SamStoreModel.AspNetUserClaim" Width="1.5" PointX="9.875" PointY="1" />
+        <EntityTypeShape EntityType="SamStoreModel.AspNetUserLogin" Width="1.5" PointX="9.875" PointY="3.75" />
+        <EntityTypeShape EntityType="SamStoreModel.AspNetUser" Width="1.5" PointX="7.625" PointY="1.375" />
+        <AssociationConnector Association="SamStoreModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="SamStoreModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="SamStoreModel.AspNetUserRoles" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
