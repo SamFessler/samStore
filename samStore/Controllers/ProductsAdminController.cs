@@ -146,7 +146,7 @@ namespace samStore.Controllers
                     var blob = rootContainer.GetBlobReference("/Content/Images/" + filename);
                     blob.UploadFromStream(image.InputStream);
 
-                    filename = blob.
+                    filename = blob.Uri.ToString();
                 }
 
 
