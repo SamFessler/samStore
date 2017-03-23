@@ -7,6 +7,9 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using samStore.Models;
+using System.Configuration;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Blob;
 
 namespace samStore.Controllers
 {
@@ -48,11 +51,39 @@ namespace samStore.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,ProductID,ProductName,ProductDescription,ProductPrice,Active,Inventory,TreeSpecies,TreeSkill,CreatedDate,ModifiedDate")] Product product)
+        public ActionResult Create([Bind(Include = "ID,ProductID,ProductName,ProductDescription,ProductPrice,Active,Inventory,TreeSpecies,TreeSkill,CreatedDate,ModifiedDate")] Product product, HttpPostedFileBase image)
         {
             if (ModelState.IsValid)
             {
-                db.Products.Add(product);
+                product.ModifiedDate = DateTime.UtcNow;
+                db.Entry(product).State = EntityState.Modified;
+
+                string filename = image.FileName;
+                int i = 1;
+                while(System.IO.File.Exists(Server.MapPath("/Content/Images/"+ filename)))
+                {
+                    filename = System.IO.Path.GetFileNameWithoutExtension(filename) + i.ToString() + System.IO.Path.GetExtension(filename);
+                    i++;
+                }
+
+                image.SaveAs(Server.MapPath("/Content/Images/" + filename));
+                if (db.ProductImages.Any(x => x.ID == product.ID))
+                {
+                    ProductImage newImage = db.ProductImages.FirstOrDefault(x => x.ProductID == product.ID);
+                    newImage.ImagePath = "/Content/Images/" + filename;
+                    newImage.ModifiedDate = DateTime.UtcNow;
+
+                }
+                else
+                {
+                    product.ProductImages.Add(new ProductImage
+                    {
+                        ImagePath = "/Content/Images/" + image.FileName,
+                        CompletedDate = DateTime.UtcNow,
+                        ModifiedDate = DateTime.UtcNow
+
+                    });
+                }
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -80,11 +111,64 @@ namespace samStore.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,ProductID,ProductName,ProductDescription,ProductPrice,Active,Inventory,TreeSpecies,TreeSkill,CreatedDate,ModifiedDate")] Product product)
+        public ActionResult Edit([Bind(Include = "ID,ProductID,ProductName,ProductDescription,ProductPrice,Active,Inventory,TreeSpecies,TreeSkill,CreatedDate,ModifiedDate")] Product product, HttpPostedFileBase image)
         {
             if (ModelState.IsValid)
             {
+
+                product.ModifiedDate = DateTime.UtcNow;
                 db.Entry(product).State = EntityState.Modified;
+
+                string filename = image.FileName;
+                if (ConfigurationManager.AppSettings["UseLocalStorage"] == "true")
+                {
+
+                   
+                    int i = 1;
+                    while (System.IO.File.Exists(Server.MapPath("/Content/Images/" + filename)))
+                    {
+                        filename = System.IO.Path.GetFileNameWithoutExtension(filename) + i.ToString() + System.IO.Path.GetExtension(filename);
+                        i++;
+                    }
+
+                }
+                else
+                {
+                    //use blob
+                    CloudStorageAccount account = CloudStorageAccount.DevelopmentStorageAccount;
+                    var blobClient = account.CreateCloudBlobClient();
+
+                    var rootContainer = blobClient.GetRootContainerReference();
+
+                    rootContainer.CreateIfNotExists();
+                    rootContainer.SetPermissions(new BlobContainerPermissions { PublicAccess = BlobContainerPublicAccessType.Blob });
+
+                    var blob = rootContainer.GetBlobReference("/Content/Images/" + filename);
+                    blob.UploadFromStream(image.InputStream);
+
+                    filename = blob.
+                }
+
+
+                image.SaveAs(Server.MapPath("/Content/Images/" + image.FileName));
+                if(db.ProductImages.Any(x => x.ID == product.ID))
+                {
+                    ProductImage newImage = db.ProductImages.FirstOrDefault(x => x.ProductID == product.ID);
+                    newImage.ImagePath = "/Content/Images/" + image.FileName;
+                    newImage.ModifiedDate = DateTime.UtcNow;
+
+                }
+                else
+                {
+                    product.ProductImages.Add(new ProductImage
+                    {
+                        ImagePath = "/Content/Images/" + image.FileName,
+                        CompletedDate = DateTime.UtcNow,
+                        ModifiedDate = DateTime.UtcNow
+
+                    });
+                }
+
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

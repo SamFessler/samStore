@@ -14,6 +14,7 @@ namespace samStore.Controllers
 
 
         // GET: Product
+        [OutputCache(Duration = 300)]
         public ActionResult Index(int? id)
         {
             using (SamStoreEntities entities = new SamStoreEntities())
@@ -32,7 +33,7 @@ namespace samStore.Controllers
                 }
                 else
                 {
-                    return HttpNotFound();
+                    return HttpNotFound(string.Format("ID {0} Not Found", id));
                 }
 
 
@@ -80,8 +81,17 @@ namespace samStore.Controllers
         [HttpPost]
         public ActionResult Index(ProductModel model)
         {
+            //using (SamStoreEntities entities = new SamStoreEntities())
+            //{
+            //    AspNetUser currentUser = entities.AspNetUsers.Single(x => x.UserName == User.Identity.Name);
+            //    Order o = currentUser.Orders.FirstOrDefault(x => x.Completed == null);
 
-            List<ProductModel> cart = this.Session["Cart"] as List<ProductModel>;
+            // aspnetuser needs to be linked to orders with foreignkey
+            //}
+
+
+
+                List<ProductModel> cart = this.Session["Cart"] as List<ProductModel>;
             if(cart == null)
             {
                 cart = new List<ProductModel>();
