@@ -135,7 +135,7 @@ namespace samStore.Controllers
                 else
                 {
                     //use blob
-                    CloudStorageAccount account = CloudStorageAccount.DevelopmentStorageAccount;
+                    CloudStorageAccount account = CloudStorageAccount.Parse(ConfigurationManager.AppSettings["StorageConnectionString"]);
                     var blobClient = account.CreateCloudBlobClient();
 
                     var rootContainer = blobClient.GetRootContainerReference();
@@ -143,31 +143,31 @@ namespace samStore.Controllers
                     rootContainer.CreateIfNotExists();
                     rootContainer.SetPermissions(new BlobContainerPermissions { PublicAccess = BlobContainerPublicAccessType.Blob });
 
-                    var blob = rootContainer.GetBlobReference("/Content/Images/" + filename);
+                    var blob = rootContainer.GetBlockBlobReference("/Content/Images/" + filename);
                     blob.UploadFromStream(image.InputStream);
 
                     filename = blob.Uri.ToString();
                 }
 
 
-                image.SaveAs(Server.MapPath("/Content/Images/" + image.FileName));
-                if(db.ProductImages.Any(x => x.ID == product.ID))
-                {
-                    ProductImage newImage = db.ProductImages.FirstOrDefault(x => x.ProductID == product.ID);
-                    newImage.ImagePath = "/Content/Images/" + image.FileName;
-                    newImage.ModifiedDate = DateTime.UtcNow;
+                //image.SaveAs(Server.MapPath("/Content/Images/" + image.FileName));
+                //if(db.ProductImages.Any(x => x.ID == product.ID))
+                //{
+                //    ProductImage newImage = db.ProductImages.FirstOrDefault(x => x.ProductID == product.ID);
+                //    newImage.ImagePath = "/Content/Images/" + image.FileName;
+                //    newImage.ModifiedDate = DateTime.UtcNow;
 
-                }
-                else
-                {
-                    product.ProductImages.Add(new ProductImage
-                    {
-                        ImagePath = "/Content/Images/" + image.FileName,
-                        CompletedDate = DateTime.UtcNow,
-                        ModifiedDate = DateTime.UtcNow
+                //}
+                //else
+                //{
+                //    product.ProductImages.Add(new ProductImage
+                //    {
+                //        ImagePath = "/Content/Images/" + image.FileName,
+                //        CompletedDate = DateTime.UtcNow,
+                //        ModifiedDate = DateTime.UtcNow
 
-                    });
-                }
+                //    });
+                //}
 
                 db.SaveChanges();
                 return RedirectToAction("Index");
