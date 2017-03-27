@@ -9,6 +9,19 @@ namespace samStore.Models
     public class CheckoutModel
     {
 
+        //credit card
+        [Required]
+        public DateTime? CreditCardExperation { get; set; }
+        [Required]
+        [CreditCard]
+        public string CreditCardNumber { get; set; }
+        [Required]
+        public string CreditCardName { get; set; }
+        [Required]
+        public string CardVerificationValue { get; set; }
+
+
+        //shipping
         [Display(Name = "Shipping Address Line 1")]
         [Required(ErrorMessage ="Please input adress to continue")]
         public string ShippingAddress1 { get; set; }

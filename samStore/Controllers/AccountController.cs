@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using System.Threading.Tasks;
 
 namespace samStore.Controllers
 {
@@ -18,6 +19,8 @@ namespace samStore.Controllers
             return View();
         }
 
+
+
         public ActionResult Register()
         {
 
@@ -26,7 +29,7 @@ namespace samStore.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(RegisterModel model)
+        public async Task<ActionResult> Register(RegisterModel model)
         {
             if (ModelState.IsValid)
             {
@@ -40,15 +43,26 @@ namespace samStore.Controllers
                     {
                         UserName = model.EmailAddress,
                         Email = model.EmailAddress,
-                        EmailConfirmed = true
+                    
                     };
 
                     IdentityResult result = manager.Create(user, model.Password);
+                    
+
 
                     if (result.Succeeded)
                     {
-                        FormsAuthentication.SetAuthCookie(model.EmailAddress, true);
-                        return RedirectToAction("Index", "Home");
+                        //added 
+                        User u = manager.FindByName(model.EmailAddress);
+                        string confermationToken = manager.GenerateEmailConfirmationToken(u.Id);
+
+                        string sendGridKey
+
+                        //put in email for confermation of account
+                        //pass confermation token in the email and include a link to confirm account
+
+                        
+                        return RedirectToAction("ConfirmSent");
 
                     }
                     else
@@ -72,6 +86,17 @@ namespace samStore.Controllers
         public ActionResult Login()
         {
             return View(new LoginModel());
+        }
+
+        public ActionResult ConfirmSent()
+        {
+            return View();
+        }
+
+        public ActionResult Confirm(string id, string email)
+        {
+            var userStore -new UserStore<User>(entities);
+
         }
 
         [HttpPost]

@@ -98,6 +98,31 @@
         @Html.TextBoxFor(x => x.ShippingZip, new { @class = "form-control" })
         @Html.ValidationMessageFor(x => x.ShippingZip)
     </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.CreditCardNumber, new { @class = "control-label" })
+        @Html.TextBoxFor(x => x.CreditCardNumber, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.CreditCardNumber)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.CreditCardName, new { @class = "control-label" })
+        @Html.TextBoxFor(x => x.CreditCardName, new { @class = "form-control", placeholder ="Name On Card" })
+        @Html.ValidationMessageFor(x => x.CreditCardName)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.CardVerificationValue, new { @class = "control-label" })
+        @Html.TextBoxFor(x => x.CardVerificationValue, new { @class = "form-control", placeholder = "CVV" })
+        @Html.ValidationMessageFor(x => x.CardVerificationValue)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.CreditCardExperation, new { @class = "control-label" })
+        @Html.TextBoxFor(x => x.CreditCardExperation, new { @class = "form-control", placeholder = "CVV" })
+        @Html.ValidationMessageFor(x => x.CreditCardExperation)
+    </div>
+
     <input type="submit" value="Place Order" class="btn btn-danger" />
 }
 
