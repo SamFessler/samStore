@@ -90,7 +90,7 @@
     </div>
     <div class="form-group">
         @Html.LabelFor(x => x.ShippingState, new { @class = "control-label" })
-        @Html.DropDownListFor(x => x.ShippingState, states, new { @class = "form-control" })
+        @Html.DropDownListFor(x => x.ShippingState, statesUSA, new { @class = "form-control" })
         @Html.ValidationMessageFor(x => x.ShippingState)
     </div>
     <div class="form-group">
@@ -98,6 +98,8 @@
         @Html.TextBoxFor(x => x.ShippingZip, new { @class = "form-control" })
         @Html.ValidationMessageFor(x => x.ShippingZip)
     </div>
+
+    <button name="validateshipping" id="validateshipping" class="btn btn-default">Validate Shipping</button>
 
     <div class="form-group">
         @Html.LabelFor(x => x.CreditCardNumber, new { @class = "control-label" })
@@ -124,6 +126,74 @@
     </div>
 
     <input type="submit" value="Place Order" class="btn btn-danger" />
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Address Validation</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="panel">
+                        <dl class="Address">
+                            <dt>@Html.LabelFor(x => x.ShippingAddress1)</dt>
+                            <dd></dd>
+                        </dl>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
 }
+
+
+@section Scripts{
+  <script type="text/javascript">
+      $(document).ready(function(){
+          $('#validateshipping').click(function () {
+              var street1 = $('#ShippingAddress1').val();
+              var street2 = $('#ShippingAddress2').val();
+              var city = $('#ShippingCity').val();
+              var state = $('#ShippingState').val();
+              var zip = $('#ShippingZip').val();
+
+            $.post("/checkout/ValidateAddress",
+                {
+                street1: street1,
+                street2: street2,
+                city: city,
+                state: state,
+                zip: zip
+                }).done(function (data) {
+
+                    var addressTemplate = $('dl.Address')
+                    var addressContainer = addressTemplate.parent();
+                    for (var i = 0; i < data.length; i++)
+                    {
+                        var clone = addressTemplate.clone();
+
+                        clone.children('.address1').text()
+
+
+                    }
+
+                    $('#myModal').modal('toggle');
+                    console.log(data);
+                })
+        });
+      });
+
+    </script>
+    
+    }
 
 
