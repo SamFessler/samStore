@@ -25,48 +25,62 @@ namespace samStore.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Index(CheckoutModel model)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 //validated
                 //TODO persist this order to the database and redirect to reciept page
                 //string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["SamStore"].ConnectionString;
 
-                string sendGridKey = System.Configuration.ConfigurationManager.AppSettings["SendGrid.ApiKey"];
-
-                SendGrid.SendGridClient client = new SendGrid.SendGridClient(sendGridKey);
-                SendGrid.Helpers.Mail.SendGridMessage message = new SendGrid.Helpers.Mail.SendGridMessage();
-                message.Subject = "recipt for order #0000000";
-               
-
-                var from = new EmailAddress("test@ArtOfBonsai.com", "Art Of Bonsai Support");
-
-                var subject = "Order Confermation from Art Of Bonsai";
-                var to = new EmailAddress("test@example.com", "Example User");
-                var plainTextContent = "Thank you for your order";
-                var htmlContent = "<strong>Tracking number is: </strong>";
-                var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
-                
-                
-                await client.SendEmailAsync(message);
-
-
-
 
                 using (SamStoreEntities entities = new SamStoreEntities())
                 {
-                    string uniqueName = Guid.NewGuid().ToString();
+                    Order o = null;
+                    if (User.Identity.IsAuthenticated)
+                    {
+                        AspNetUser currentUser = entities.AspNetUsers.Single(x => x.UserName == User.Identity.Name);
+                        o = currentUser.Orders.FirstOrDefault(x => x.Completed == null);
+                        if (o == null)
+                        {
+                            o = new Order();
+                            o.OrderNumber = Guid.NewGuid();
+                            currentUser.Orders.Add(o);
+                            entities.SaveChanges();
+                        }
+                    }
+                    else
+                    {
+                        if (Request.Cookies.AllKeys.Contains("orderNumber"))
+                        {
+                            Guid orderNumber = Guid.Parse(Request.Cookies["orderNumber"].Value);
+                            o = entities.Orders.FirstOrDefault(x => x.Completed == null && x.OrderNumber == orderNumber);
+                        }
+                        if (o == null)
+                        {
+                            o = new Order();
+                            o.OrderNumber = Guid.NewGuid();
+                            entities.Orders.Add(o);
+                            Response.Cookies.Add(new HttpCookie("orderNumber", o.OrderNumber.ToString()));
+                            entities.SaveChanges();
+                        }
+                    }
+                    if (o.OrderProducts.Sum(x => x.Quantity) == 0)
+                    {
+                        return RedirectToAction("Index", "Cart");
+                    }
 
-                    Order newOrder = new Models.Order(); //create object 
-                    newOrder.PurchaserEmail = uniqueName + "@codingtmeple.com";
-                    newOrder.ShipCareOf = uniqueName;
-                    newOrder.CreatedDate = DateTime.UtcNow;
-                    newOrder.CreatedDate = DateTime.UtcNow;
-                    entities.Orders.Add(newOrder);//attach to collection
-                    entities.SaveChanges();//save changes
+                    o.PurchaserEmail = User.Identity.Name;
+                    Address newShippingAddress = new Address();
+
+                    newShippingAddress.ShippingAddress1 = model.ShippingAddress1;
+                    newShippingAddress.ShippingAddress2 = model.ShippingAddress2;
+                    newShippingAddress.ShippingCity = model.ShippingCity;
+                    newShippingAddress.ShippingState = model.ShippingState;
+                    newShippingAddress.ShippingZip = model.ShippingZip;
+
+                    o.Address1 = newShippingAddress;
 
 
-                    int ID = newOrder.ID;
-                    // entities.sp_CompleteOrder(ID);  can call stored proccedure and pass ID to complete part of code
+                    entities.sp_CompleteOrder(o.ID);
 
 
                     string merchandId = ConfigurationManager.AppSettings["Braintree.MerchantID"];
@@ -77,12 +91,13 @@ namespace samStore.Controllers
                     Braintree.BraintreeGateway braintree = new Braintree.BraintreeGateway(enviornment, merchandId, publicKey, privateKey);
 
                     Braintree.TransactionRequest newTransaction = new Braintree.TransactionRequest();
-                    newTransaction.Amount = 1m; //hardcode the price
+                    //newTransaction.Amount = 1m; //hardcode the price
+                    newTransaction.Amount = o.OrderProducts.Sum(x => x.Quantity * x.Product.ProductPrice) ?? 0.01m;
 
                     Braintree.TransactionCreditCardRequest creditCard = new Braintree.TransactionCreditCardRequest();
                     creditCard.CardholderName = model.CreditCardName;
                     creditCard.CVV = model.CardVerificationValue;
-                    creditCard.ExpirationMonth = model.CreditCardExperation.Value.Month.ToString().PadLeft(2,'0');
+                    creditCard.ExpirationMonth = model.CreditCardExperation.Value.Month.ToString().PadLeft(2, '0');
                     creditCard.ExpirationYear = model.CreditCardExperation.Value.Year.ToString();
                     creditCard.Number = model.CreditCardNumber;
 
@@ -94,7 +109,7 @@ namespace samStore.Controllers
                     {
                         Braintree.CustomerSearchRequest search = new Braintree.CustomerSearchRequest();
                         search.Email.Is(User.Identity.Name);
-                        
+
                     }
 
                     Braintree.Result<Braintree.Transaction> result = await braintree.Transaction.SaleAsync(newTransaction);
@@ -103,16 +118,36 @@ namespace samStore.Controllers
                     {
 
                         ModelState.AddModelError("CreditCard", "Unsuccessfull transaction request on credicard payment")
-                       
-                     }
 
+
+                     };
                 }
             }
-            else
-            {
-                //invalid
-            }
-            return View(model);
+        }
+
+
+
+        [HttpPost]
+        public ActionResult ValidateAddress(string street1, string street2, string city, string state, string zip)
+        {
+            string authId = ConfigurationManager.AppSettings["SmartyStreets.AuthID"];
+            string authToken = ConfigurationManager.AppSettings["SmartyStreets.AuthToken"];
+            SmartyStreets.USStreetApi.ClientBuilder builder = new SmartyStreets.USStreetApi.ClientBuilder(authId, authToken);
+            SmartyStreets.USStreetApi.Client client = builder.Build();
+
+            SmartyStreets.USStreetApi.Lookup lookup = new SmartyStreets.USStreetApi.Lookup();
+
+            lookup.City = city;
+            lookup.State = state;
+            lookup.Street = street1;
+            lookup.Street2 = street2;
+            lookup.ZipCode = zip;
+
+            client.Send(lookup);
+
+            var results = lookup.Result;
+
+            return Json(results);
         }
 
     }

@@ -27,7 +27,7 @@ namespace samStore.Models
         public Nullable<int> ProductID { get; set; }
         public string ProductName { get; set; }
         public string ProductDescription { get; set; }
-        public decimal ProductPrice { get; set; }
+        public Nullable<decimal> ProductPrice { get; set; }
         public bool Active { get; set; }
         public int Inventory { get; set; }
         public string TreeSpecies { get; set; }

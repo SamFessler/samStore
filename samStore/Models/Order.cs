@@ -35,5 +35,6 @@ namespace samStore.Models
         public virtual Address Address1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrderProduct> OrderProducts { get; set; }
+        public virtual AspNetUser AspNetUser { get; set; }
     }
 }

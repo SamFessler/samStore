@@ -20,31 +20,6 @@ namespace samStore.Controllers
             return View();
         }
 
-        [HttpPost]
-        public ActionResult ValidateAddress(string street1, string street2, string city, string state, string zip)
-        {
-            string authId = ConfigurationManager.AppSettings["SmartyStreets.AuthID"];
-            string authToken = ConfigurationManager.AppSettings["SmartyStreets.AuthToken"];
-            SmartyStreets.USStreetApi.ClientBuilder builder = new SmartyStreets.USStreetApi.ClientBuilder(authId, authToken);
-            SmartyStreets.USStreetApi.Client client = builder.Build();
-
-            SmartyStreets.USStreetApi.Lookup lookup = new SmartyStreets.USStreetApi.Lookup();
-
-            lookup.City = city;
-            lookup.State = state;
-            lookup.Street = street1;
-            lookup.Street2 = street2;
-            lookup.ZipCode = zip;
-
-            client.Send(lookup);
-
-            var results = lookup.Result;
-
-            return Json(results);
-        }
-
-
-
         public ActionResult Register()
         {
 
