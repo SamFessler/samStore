@@ -11,9 +11,8 @@ namespace samStore.Models
 {
     using System;
     using System.Data.Entity;
-    using System.Data.Entity.Core.Objects;
     using System.Data.Entity.Infrastructure;
-
+    
     public partial class SamStoreEntities : DbContext
     {
         public SamStoreEntities()
@@ -27,32 +26,17 @@ namespace samStore.Models
         }
     
         public virtual DbSet<Address> Addresses { get; set; }
+        public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
+        public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
+        public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
+        public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<CategoryProduct> CategoryProducts { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<OrderProduct> OrderProducts { get; set; }
         public virtual DbSet<Product> Products { get; set; }
-        public virtual DbSet<State> States { get; set; }
         public virtual DbSet<ProductImage> ProductImages { get; set; }
         public virtual DbSet<Review> Reviews { get; set; }
-        public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
-        public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
-        public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
-        public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
-
-
-        public virtual int sp_CompleteOrder(Nullable<int> orderID)
-        {
-            var orderIDParameter = orderID.HasValue ?
-                new ObjectParameter("orderID", orderID) :
-                new ObjectParameter("orderID", typeof(int));
-
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_CompleteOrder", orderIDParameter);
-        }
-
-        internal void sp_CompleteOrder(object id)
-        {
-            throw new NotImplementedException();
-        }
+        public virtual DbSet<State> States { get; set; }
     }
 }

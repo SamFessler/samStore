@@ -13,30 +13,57 @@ namespace samStore.Controllers
         public ActionResult Index()
         {
             CartModel model = new CartModel();
-            List<ProductModel> cart = Session["Cart"] as List<ProductModel>;
-            if(cart == null)
-            {
-                cart = new List<ProductModel>();
-            }
 
-            ViewBag.ItemsInCart = 0;
-            model.Items = new CartItemModel[cart.Count];
-            model.SubTotal = 0;
-            for (int i = 0; i < cart.Count; i++)
+            using (SamStoreEntities entities = new SamStoreEntities())
             {
-                model.Items[i] = new CartItemModel
+
+                Order o = null;
+                if (User.Identity.IsAuthenticated)
                 {
-                    Product = cart[i],
-                    Quantity = 1
+                    AspNetUser currentUser = entities.AspNetUsers.Single(x => x.UserName == User.Identity.Name);
+                    o = currentUser.Orders.FirstOrDefault(x => x.Completed == null);
+                    if (o == null)
+                    {
+                        o = new Order();
+                        o.OrderNumber = Guid.NewGuid();
+                        currentUser.Orders.Add(o);
+                        entities.SaveChanges();
+                    }
+                }
+                else
+                {
+                    if (Request.Cookies.AllKeys.Contains("orderNumber"))
+                    {
+                        Guid orderNumber = Guid.Parse(Request.Cookies["orderNumber"].Value);
+                        o = entities.Orders.FirstOrDefault(x => x.Completed == null && x.OrderNumber == orderNumber);
+                    }
+                    if (o == null)
+                    {
+                        o = new Order();
+                        o.OrderNumber = Guid.NewGuid();
+                        entities.Orders.Add(o);
+                        Response.Cookies.Add(new HttpCookie("orderNumber", o.OrderNumber.ToString()));
+                        entities.SaveChanges();
+                    }
+                }
 
-                };
+                model.Items = o.OrderProducts.Select(x => new CartItemModel
+                {
+                    Product = new ProductModel
+                    {
+                        Id = x.Product.ProductID,
+                        TreeDescription = x.Product.ProductDescription,
+                        TreeName = x.Product.ProductName,
+                        TreePrice = x.Product.ProductPrice,
+                        TreeImage = x.Product.ProductImages.Select(y => y.ImagePath)
+                    },
+                    Quantity = x.Quantity
 
-                model.SubTotal += (model.Items[i].Product.TreePrice) * (model.Items[i].Quantity);
-                ViewBag.ItemsInCart++;//TODO needs to be run many places
+                }).ToArray();
+
+                model.SubTotal = o.OrderProducts.Sum(x => x.Product.ProductPrice * x.Quantity);
             }
-
-
-           
+            ViewBag.PageGenerationTime = DateTime.UtcNow;
             return View(model);
         }
     }

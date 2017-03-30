@@ -23,8 +23,8 @@ namespace samStore.Models
         public int ID { get; set; }
         public string CategoryName { get; set; }
         public string CategoryDescription { get; set; }
-        public Nullable<System.DateTime> CreatedDate { get; set; }
-        public Nullable<System.DateTime> ModifiedDate { get; set; }
+        public System.DateTime CreatedDate { get; set; }
+        public System.DateTime ModifiedDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CategoryProduct> CategoryProducts { get; set; }

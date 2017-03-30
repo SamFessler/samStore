@@ -7,7 +7,7 @@ namespace samStore.Models
 {
     public class ProductModel
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         public string TreeName { get; set; }
         public decimal? TreePrice { get; set; }

@@ -19,8 +19,8 @@ namespace samStore.Models
         public int Rating { get; set; }
         public string Email { get; set; }
         public string Body { get; set; }
-        public Nullable<System.DateTime> CreatedDate { get; set; }
-        public Nullable<System.DateTime> ModifiedDate { get; set; }
+        public System.DateTime CreatedDate { get; set; }
+        public System.DateTime ModifiedDate { get; set; }
     
         public virtual Product Product { get; set; }
     }

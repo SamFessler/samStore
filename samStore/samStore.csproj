@@ -199,6 +199,7 @@
     <Compile Include="Models\AspNetUserLogin.cs">
       <DependentUpon>SamStoreModels.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CartItemModel.cs" />
     <Compile Include="Models\CartModel.cs" />
     <Compile Include="Models\Category.cs">
       <DependentUpon>SamStoreModels.tt</DependentUpon>
@@ -207,7 +208,9 @@
       <DependentUpon>SamStoreModels.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CheckoutModel.cs" />
-    <Compile Include="Models\State.cs" />
+    <Compile Include="Models\State.cs">
+      <DependentUpon>SamStoreModels.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\Order.cs">

@@ -82,7 +82,7 @@ namespace samStore.Controllers
                     o.Address1 = newShippingAddress;
 
 
-                    entities.sp_CompleteOrder(o.ID);
+                    //entities.sp_CompleteOrder(o.ID);
 
 
                     string merchandId = ConfigurationManager.AppSettings["Braintree.MerchantID"];
@@ -94,7 +94,7 @@ namespace samStore.Controllers
 
                     Braintree.TransactionRequest newTransaction = new Braintree.TransactionRequest();
                     //newTransaction.Amount = 1m; //hardcode the price
-                    newTransaction.Amount = o.OrderProducts.Sum(x => x.Quantity * x.Product.ProductPrice) ?? 0.01m;
+                    newTransaction.Amount = o.OrderProducts.Sum(x => x.Quantity * x.Product.ProductPrice);
 
                     Braintree.TransactionCreditCardRequest creditCard = new Braintree.TransactionCreditCardRequest();
                     creditCard.CardholderName = model.CreditCardName;

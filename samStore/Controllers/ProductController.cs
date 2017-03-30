@@ -10,7 +10,7 @@ namespace samStore.Controllers
     public class ProductController : Controller
     {
 
-        private static List<ProductModel> Trees = new List<ProductModel>();
+        //private static List<ProductModel> Trees = new List<ProductModel>();
 
 
         // GET: Product
@@ -28,7 +28,8 @@ namespace samStore.Controllers
                     model.TreePrice = product.ProductPrice;
                     model.TreeName = product.ProductName;
                     model.TreeImage = product.ProductImages.Select(x => x.ImagePath).ToArray();
-
+                    //product.ModifiedDate = DateTime.UtcNow;
+                    //product.CreatedDate = DateTime.UtcNow;
                     return View(model);
                 }
                 else
@@ -81,33 +82,95 @@ namespace samStore.Controllers
         [HttpPost]
         public ActionResult Index(ProductModel model)
         {
-            //using (SamStoreEntities entities = new SamStoreEntities())
-            //{
-            //    AspNetUser currentUser = entities.AspNetUsers.Single(x => x.UserName == User.Identity.Name);
-            //    Order o = currentUser.Orders.FirstOrDefault(x => x.Completed == null);
+            using (SamStoreEntities entities = new SamStoreEntities())
+            {
+                if (User.Identity.IsAuthenticated)
+                {
+                    AspNetUser currentUser = entities.AspNetUsers.Single(x => x.UserName == User.Identity.Name);
+                    Order o = currentUser.Orders.FirstOrDefault(x => x.Completed == null);
 
-            // aspnetuser needs to be linked to orders with foreignkey
+                    if (o == null)
+                    {
+                        o = new Order();
+                        o.OrderNumber = Guid.NewGuid();
+                        currentUser.Orders.Add(o);
+
+                        o.CreatedDate = DateTime.UtcNow;
+                        o.ModifiedDate = DateTime.UtcNow;
+                    }
+                    var product = o.OrderProducts.FirstOrDefault(x => x.ProductID == model.Id);
+                    if (product == null)
+                    {
+                        product = new OrderProduct();
+                        product.ProductID = model.Id ?? 0;
+                        product.Quantity = 0;
+                        product.CreatedDate = DateTime.UtcNow;
+                        product.ModifiedDate = DateTime.UtcNow;
+                        o.OrderProducts.Add(product);
+                        o.CreatedDate = DateTime.UtcNow;
+                        o.ModifiedDate = DateTime.UtcNow;
+                    }
+                    product.Quantity += 1;
+                }
+                else
+                {
+                    Order o = null;
+                    o.CreatedDate = DateTime.UtcNow;
+                    o.ModifiedDate = DateTime.UtcNow;
+                    if (Request.Cookies.AllKeys.Contains("orderNumber"))
+                    {
+                        Guid orderNumber = Guid.Parse(Request.Cookies["orderNumber"].Value);
+                        o = entities.Orders.FirstOrDefault(x => x.Completed == null && x.OrderNumber == orderNumber);
+                        o.CreatedDate = DateTime.UtcNow;
+                        o.ModifiedDate = DateTime.UtcNow;
+                    }
+                    if (o == null)
+                    {
+                        o = new Order();
+                        o.OrderNumber = Guid.NewGuid();
+                        entities.Orders.Add(o);
+                        Response.Cookies.Add(new HttpCookie("orderNumber", o.OrderNumber.ToString()));
+
+                        o.CreatedDate = DateTime.UtcNow;
+                        o.ModifiedDate = DateTime.UtcNow;
+                    }
+                    var product = o.OrderProducts.FirstOrDefault(x => x.ProductID == model.Id);
+                    if (product == null)
+                    {
+                        product = new OrderProduct();
+                        product.ProductID = model.Id ?? 0;
+                        product.Quantity = 0;
+                        product.CreatedDate = DateTime.UtcNow;
+                        product.ModifiedDate = DateTime.UtcNow;
+
+                        o.OrderProducts.Add(product);
+                        o.CreatedDate = DateTime.UtcNow;
+                        o.ModifiedDate = DateTime.UtcNow;
+                    }
+                product.Quantity += 1;
+                }
+                entities.SaveChanges();
+                TempData.Add("AddedToCart", true);
+            }
+            return RedirectToAction("Index", "Cart");
+
+        }
+            //List<ProductModel> cart = this.Session["Cart"] as List<ProductModel>;
+            //if(cart == null)
+            //{
+            //    cart = new List<ProductModel>();
             //}
 
+            //cart.Add(model);
+            //this.Session.Add("Cart", cart);
 
+            ////repalced by using session to pass cart model
+            ////this.Response.SetCookie(new HttpCookie("ProductName", "-1"));
+            ////this.Response.SetCookie(new HttpCookie("ProductId", model.Id.ToString()));
+            ////this.Response.SetCookie(new HttpCookie("ProductPrice", model.TreePrice.ToString()));
 
-                List<ProductModel> cart = this.Session["Cart"] as List<ProductModel>;
-            if(cart == null)
-            {
-                cart = new List<ProductModel>();
-            }
+            //TempData.Add("AddedToCart", true);
 
-            cart.Add(model);
-            this.Session.Add("Cart", cart);
-
-            //repalced by using session to pass cart model
-            //this.Response.SetCookie(new HttpCookie("ProductName", "-1"));
-            //this.Response.SetCookie(new HttpCookie("ProductId", model.Id.ToString()));
-            //this.Response.SetCookie(new HttpCookie("ProductPrice", model.TreePrice.ToString()));
-
-            TempData.Add("AddedToCart", true);
-
-            return RedirectToAction("Index", "Cart");
-        }
+            //return RedirectToAction("Index", "Cart");
     }
 }

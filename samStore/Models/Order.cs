@@ -30,11 +30,12 @@ namespace samStore.Models
         public string ShipCareOf { get; set; }
         public Nullable<int> ShippingAddressID { get; set; }
         public Nullable<int> BillingAddressID { get; set; }
+        public string AspNetUserID { get; set; }
     
         public virtual Address Address { get; set; }
         public virtual Address Address1 { get; set; }
+        public virtual AspNetUser AspNetUser { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrderProduct> OrderProducts { get; set; }
-        public virtual AspNetUser AspNetUser { get; set; }
     }
 }

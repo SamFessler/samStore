@@ -4,29 +4,31 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="465421ed498549268592d718c56c3162" Name="Diagram1" ZoomLevel="71">
-        <EntityTypeShape EntityType="SamStoreModel.Address" Width="1.5" PointX="1.5" PointY="17.75" />
-        <EntityTypeShape EntityType="SamStoreModel.Category" Width="1.5" PointX="0.75" PointY="2.125" />
-        <EntityTypeShape EntityType="SamStoreModel.CategoryProduct" Width="1.5" PointX="3" PointY="3.125" />
-        <EntityTypeShape EntityType="SamStoreModel.Order" Width="1.5" PointX="0.75" PointY="10.5" />
-        <EntityTypeShape EntityType="SamStoreModel.OrderProduct" Width="1.5" PointX="3" PointY="6.125" />
-        <EntityTypeShape EntityType="SamStoreModel.Product" Width="1.5" PointX="0.75" PointY="5.375" />
-        <EntityTypeShape EntityType="SamStoreModel.ProductImage" Width="1.5" PointX="3" PointY="10.5" />
-        <EntityTypeShape EntityType="SamStoreModel.Review" Width="1.5" PointX="3" PointY="13.625" />
+      <Diagram DiagramId="465421ed498549268592d718c56c3162" Name="Diagram1" ZoomLevel="62">
+        <EntityTypeShape EntityType="SamStoreModel.Address" Width="1.5" PointX="1.5" PointY="27.375" />
+        <EntityTypeShape EntityType="SamStoreModel.AspNetRole" Width="1.5" PointX="1.5" PointY="24.75" />
+        <EntityTypeShape EntityType="SamStoreModel.AspNetUserClaim" Width="1.5" PointX="3.75" PointY="21.875" />
+        <EntityTypeShape EntityType="SamStoreModel.AspNetUserLogin" Width="1.5" PointX="3.75" PointY="19.375" />
+        <EntityTypeShape EntityType="SamStoreModel.AspNetUser" Width="1.5" PointX="1.5" PointY="19.5" />
+        <EntityTypeShape EntityType="SamStoreModel.Category" Width="1.5" PointX="3.75" PointY="2.625" />
+        <EntityTypeShape EntityType="SamStoreModel.CategoryProduct" Width="1.5" PointX="6" PointY="8.625" />
+        <EntityTypeShape EntityType="SamStoreModel.Order" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="SamStoreModel.OrderProduct" Width="1.5" PointX="3" PointY="6.5" />
+        <EntityTypeShape EntityType="SamStoreModel.Product" Width="1.5" PointX="0.75" PointY="7.75" />
+        <EntityTypeShape EntityType="SamStoreModel.ProductImage" Width="1.5" PointX="3" PointY="10" />
+        <EntityTypeShape EntityType="SamStoreModel.Review" Width="1.5" PointX="3" PointY="16" />
+        <EntityTypeShape EntityType="SamStoreModel.State" Width="1.5" PointX="5.75" PointY="3.125" />
         <AssociationConnector Association="SamStoreModel.FK_Order_BillingAddress" />
         <AssociationConnector Association="SamStoreModel.FK_Order_ShippingAddress" />
+        <AssociationConnector Association="SamStoreModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="SamStoreModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="SamStoreModel.FK_Order_AspNetUsers" />
         <AssociationConnector Association="SamStoreModel.FK_CategoryProduct_Category" />
         <AssociationConnector Association="SamStoreModel.FK_CategoryProduct_Product" />
         <AssociationConnector Association="SamStoreModel.FK_OrderProduct_Order" />
         <AssociationConnector Association="SamStoreModel.FK_OrderProduct_Product" />
         <AssociationConnector Association="SamStoreModel.FK_ProductImage_Product" />
         <AssociationConnector Association="SamStoreModel.FK_Review_Product" />
-        <EntityTypeShape EntityType="SamStoreModel.AspNetRole" Width="1.5" PointX="5.375" PointY="2.5" />
-        <EntityTypeShape EntityType="SamStoreModel.AspNetUserClaim" Width="1.5" PointX="9.875" PointY="1" />
-        <EntityTypeShape EntityType="SamStoreModel.AspNetUserLogin" Width="1.5" PointX="9.875" PointY="3.75" />
-        <EntityTypeShape EntityType="SamStoreModel.AspNetUser" Width="1.5" PointX="7.625" PointY="1.375" />
-        <AssociationConnector Association="SamStoreModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
-        <AssociationConnector Association="SamStoreModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
         <AssociationConnector Association="SamStoreModel.AspNetUserRoles" />
       </Diagram>
     </edmx:Diagrams>

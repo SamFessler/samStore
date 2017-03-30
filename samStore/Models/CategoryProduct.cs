@@ -16,8 +16,8 @@ namespace samStore.Models
     {
         public int CategoryID { get; set; }
         public int ProductID { get; set; }
-        public Nullable<System.DateTime> CreatedDate { get; set; }
-        public Nullable<System.DateTime> ModifiedDate { get; set; }
+        public System.DateTime CreatedDate { get; set; }
+        public System.DateTime ModifiedDate { get; set; }
     
         public virtual Category Category { get; set; }
         public virtual Product Product { get; set; }
