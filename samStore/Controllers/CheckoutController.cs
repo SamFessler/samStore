@@ -8,10 +8,12 @@ using System.Threading.Tasks;
 using SendGrid.Helpers.Mail;
 using System.Configuration;
 
+
 namespace samStore.Controllers
 {
     public class CheckoutController : Controller
     {
+
         // GET: Checkout
         public ActionResult Index()
         {
@@ -105,25 +107,54 @@ namespace samStore.Controllers
 
                     newTransaction.CreditCard = creditCard;
 
+                    //If the user is logged in, associate this transaction with their account
                     if (User.Identity.IsAuthenticated)
                     {
                         Braintree.CustomerSearchRequest search = new Braintree.CustomerSearchRequest();
                         search.Email.Is(User.Identity.Name);
+                        var customers = braintree.Customer.Search(search);
+                        newTransaction.CustomerId = customers.FirstItem.Id;
 
+                       
                     }
-
                     Braintree.Result<Braintree.Transaction> result = await braintree.Transaction.SaleAsync(newTransaction);
 
                     if (!result.IsSuccess())
                     {
+                        ModelState.AddModelError("CreditCard", "Could not authorize payment");
+                        return View(model);
+                    };
 
-                        ModelState.AddModelError("CreditCard", "Unsuccessfull transaction request on credicard payment")
+                    string sendGridApiKey = ConfigurationManager.AppSettings["SendGrid.ApiKey"];
 
+                    SendGrid.SendGridClient client = new SendGrid.SendGridClient(sendGridApiKey);
+                    SendGrid.Helpers.Mail.SendGridMessage message = new SendGrid.Helpers.Mail.SendGridMessage();
+                    message.SetTemplateId("524c7845-3ed9-4d53-81c8-b467443f8c5c");
+                    message.Subject = string.Format("Receipt for order {0}", o.ID);
+                    message.From = new SendGrid.Helpers.Mail.EmailAddress("admin@boardgames.codingtemple.com", "Coding Temple Board Games Administrator");
+                    message.AddTo(new SendGrid.Helpers.Mail.EmailAddress(model.EmailAddress));
+                    SendGrid.Helpers.Mail.Content contents = new SendGrid.Helpers.Mail.Content("text/plain", "Thank you for placing an order with Coding Temple Board Games");
 
-                     };
+                    message.AddSubstitution("%ordernum%", o.ID.ToString());
+                    message.AddContent(contents.Type, contents.Value);
+                    //foreach (var item in o.OrderProducts)
+                    //{
+                    //    SendGrid.Helpers.Mail.Content contents2 = new SendGrid.Helpers.Mail.Content("text/plain", string.Format("You've ordered {0} copies of {1}", item.Quantity, item.Product.Name));
+
+                    //    message.AddContent(contents2.Type, contents2.Value);
+                    //}
+
+                    SendGrid.Response response = await client.SendEmailAsync(message);
+
                 }
+                return RedirectToAction("Index", "Receipt");
+
             }
+            return View(model);
+
         }
+
+    
 
 
 
@@ -144,11 +175,24 @@ namespace samStore.Controllers
             lookup.ZipCode = zip;
 
             client.Send(lookup);
+            
 
-            var results = lookup.Result;
+            return Json(lookup.Result);
+        }
 
-            return Json(results);
+        [HttpPost]
+        public ActionResult States()
+        {
+            using (SamStoreEntities entities = new SamStoreEntities())
+            {
+
+                    return Json(entities.States.Select(x => new StateModel { ID = x.ID, Text = x.Name, Value = x.Abbreviation }).ToArray());
+            }
+
+
         }
 
     }
+
+
 }

@@ -8,6 +8,10 @@ namespace samStore.Models
 {
     public class CheckoutModel
     {
+        //email
+        [EmailAddress]
+        public string EmailAddress { get; set; }
+
 
         //credit card
         [Required]
@@ -23,14 +27,14 @@ namespace samStore.Models
 
         //shipping
         [Display(Name = "Shipping Address Line 1")]
-        [Required(ErrorMessage ="Please input adress to continue")]
+        [Required(ErrorMessage ="Please input address to continue")]
         public string ShippingAddress1 { get; set; }
 
         [Display(Name = "Shipping Address Line 2")]
         public string ShippingAddress2 { get; set; }
 
         [Display(Name = "Shipping City")]
-        [Required(ErrorMessage = "Please input adress to continue")]
+        [Required(ErrorMessage = "Please input address to continue")]
         public string ShippingCity { get; set; }
 
         //[]
@@ -41,7 +45,9 @@ namespace samStore.Models
         public string ShippingState { get; set; }
 
         [Display(Name ="Shipping Zip Code")]
-        [Required(ErrorMessage = "Please input your Zip  Code to continue")]
+        [MinLength(5)]
+        [MaxLength(12)]
+        [Required(ErrorMessage = "Please input your Zip-Code to continue")]
         public string ShippingZip { get; set; }
 
     }

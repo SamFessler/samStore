@@ -10,13 +10,13 @@ namespace samStore.Models
         public int Id { get; set; }
 
         public string TreeName { get; set; }
-        public decimal TreePrice { get; set; }
+        public decimal? TreePrice { get; set; }
 
         public string TreeSpecies { get; set; }
         public string TreeType { get; set;}
         public string TreeDescription { get; set; }
 
-        public string[] TreeImage { get; set; }
+        public IEnumerable<string> TreeImage { get; set; }
 
 
 

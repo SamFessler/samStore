@@ -207,6 +207,7 @@
       <DependentUpon>SamStoreModels.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CheckoutModel.cs" />
+    <Compile Include="Models\State.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\Order.cs">
@@ -241,6 +242,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SamStoreModels.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\StateModel.cs" />
     <Compile Include="Models\StudentModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -252,13 +254,8 @@
     <Content Include="Content\Images\japaneseBlackPine.jpg" />
     <Content Include="Content\Images\montreyCypress.jpg" />
     <Content Include="favicon.ico" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap.min.css.map" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
@@ -270,6 +267,14 @@
     <Content Include="Models\SamStoreModels.edmx.diagram">
       <DependentUpon>SamStoreModels.edmx</DependentUpon>
     </Content>
+    <Content Include="Content\Fonts\DK Momotaro.ttf" />
+    <Content Include="Content\Fonts\lastninja.ttf" />
+    <Content Include="Content\Fonts\Korean Calligraphy.ttf" />
+    <Content Include="Content\Fonts\Chinese Takeaway.ttf" />
+    <Content Include="Content\Fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\Fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\Fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\Fonts\glyphicons-halflings-regular.woff2" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Models\SamStoreModels.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
