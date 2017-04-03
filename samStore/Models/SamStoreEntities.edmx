@@ -9,14 +9,15 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ShippingAddress1" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="ShippingAddress2" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="ShippingAddress2" Type="nvarchar" MaxLength="100" />
           <Property Name="ShippingCity" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="ShippingState" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="ShippingZip" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
-          <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="ModifiedDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="AspNetUserID" Type="nvarchar" MaxLength="128" />
         </EntityType>
         <EntityType Name="AspNetRoles">
           <Key>
@@ -64,7 +65,7 @@
           <Property Name="PhoneNumber" Type="nvarchar(max)" />
           <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
           <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
-          <Property Name="LockoutEndDateUtc" Type="datetime" />
+          <Property Name="LockoutEndDateUtc" Type="datetime2" Precision="7" />
           <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
           <Property Name="AccessFailedCount" Type="int" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
@@ -76,8 +77,8 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CategoryName" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="CategoryDescription" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
-          <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="ModifiedDate" Type="datetime2" Precision="7" Nullable="false" />
         </EntityType>
         <EntityType Name="CategoryProduct">
           <Key>
@@ -86,8 +87,8 @@
           </Key>
           <Property Name="CategoryID" Type="int" Nullable="false" />
           <Property Name="ProductID" Type="int" Nullable="false" />
-          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
-          <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="ModifiedDate" Type="datetime2" Precision="7" Nullable="false" />
         </EntityType>
         <EntityType Name="Order">
           <Key>
@@ -96,10 +97,10 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="OrderNumber" Type="uniqueidentifier" />
           <Property Name="Inventory" Type="int" Nullable="false" />
-          <Property Name="CreatedDate" Type="datetime" />
-          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="CreatedDate" Type="datetime2" Precision="7" />
+          <Property Name="ModifiedDate" Type="datetime2" Precision="7" />
           <Property Name="PurchaserEmail" Type="nvarchar" MaxLength="1000" />
-          <Property Name="Completed" Type="datetime" />
+          <Property Name="Completed" Type="datetime2" Precision="7" />
           <Property Name="ShipCareOf" Type="nvarchar" MaxLength="1000" />
           <Property Name="ShippingAddressID" Type="int" />
           <Property Name="BillingAddressID" Type="int" />
@@ -113,8 +114,8 @@
           <Property Name="OrderID" Type="int" Nullable="false" />
           <Property Name="ProductID" Type="int" Nullable="false" />
           <Property Name="Quantity" Type="int" Nullable="false" />
-          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
-          <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime2" Precision="7" />
+          <Property Name="ModifiedDate" Type="datetime2" Precision="7" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -129,8 +130,8 @@
           <Property Name="Inventory" Type="int" Nullable="false" />
           <Property Name="TreeSpecies" Type="nvarchar" MaxLength="500" />
           <Property Name="TreeSkill" Type="nvarchar" MaxLength="500" />
-          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
-          <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime2" Precision="7" />
+          <Property Name="ModifiedDate" Type="datetime2" Precision="7" />
         </EntityType>
         <EntityType Name="ProductImage">
           <Key>
@@ -140,8 +141,8 @@
           <Property Name="ImagePath" Type="nvarchar" MaxLength="1000" Nullable="false" />
           <Property Name="ImageDescription" Type="nvarchar" MaxLength="100" />
           <Property Name="ProductID" Type="int" />
-          <Property Name="CompletedDate" Type="datetime" />
-          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="CompletedDate" Type="datetime2" Precision="7" />
+          <Property Name="ModifiedDate" Type="datetime2" Precision="7" />
         </EntityType>
         <EntityType Name="Review">
           <Key>
@@ -152,8 +153,8 @@
           <Property Name="Rating" Type="int" Nullable="false" />
           <Property Name="Email" Type="nvarchar" MaxLength="1000" Nullable="false" />
           <Property Name="Body" Type="ntext" />
-          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
-          <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="ModifiedDate" Type="datetime2" Precision="7" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'SamStore.dbo.State' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -167,6 +168,18 @@ warning 6002: The table/view 'SamStore.dbo.State' does not have a primary key de
           <Property Name="Created" Type="datetime" />
           <Property Name="Modified" Type="datetime" />
         </EntityType>
+        <Association Name="FK_Address_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="Address" Type="Self.Address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Address">
+              <PropertyRef Name="AspNetUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_CategoryProduct_Category">
           <End Role="Category" Type="Self.Category" Multiplicity="1" />
           <End Role="CategoryProduct" Type="Self.CategoryProduct" Multiplicity="*" />
@@ -360,6 +373,10 @@ warning 6002: The table/view 'SamStore.dbo.State' does not have a primary key de
     [State].[Modified] AS [Modified]
     FROM [dbo].[State] AS [State]</DefiningQuery>
           </EntitySet>
+          <AssociationSet Name="FK_Address_AspNetUsers" Association="Self.FK_Address_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Address" EntitySet="Address" />
+          </AssociationSet>
           <AssociationSet Name="FK_CategoryProduct_Category" Association="Self.FK_CategoryProduct_Category">
             <End Role="Category" EntitySet="Category" />
             <End Role="CategoryProduct" EntitySet="CategoryProduct" />
@@ -431,6 +448,10 @@ warning 6002: The table/view 'SamStore.dbo.State' does not have a primary key de
           <EntitySet Name="ProductImages" EntityType="SamStoreModel.ProductImage" />
           <EntitySet Name="Reviews" EntityType="SamStoreModel.Review" />
           <EntitySet Name="States" EntityType="SamStoreModel.State" />
+          <AssociationSet Name="FK_Address_AspNetUsers" Association="SamStoreModel.FK_Address_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="Address" EntitySet="Addresses" />
+          </AssociationSet>
           <AssociationSet Name="FK_Order_BillingAddress" Association="SamStoreModel.FK_Order_BillingAddress">
             <End Role="Address" EntitySet="Addresses" />
             <End Role="Order" EntitySet="Orders" />
@@ -484,14 +505,16 @@ warning 6002: The table/view 'SamStore.dbo.State' does not have a primary key de
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ShippingAddress1" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="ShippingAddress2" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ShippingAddress2" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="ShippingCity" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="ShippingState" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="ShippingZip" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="AspNetUserID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUser" Relationship="SamStoreModel.FK_Address_AspNetUsers" FromRole="Address" ToRole="AspNetUser" />
           <NavigationProperty Name="Orders" Relationship="SamStoreModel.FK_Order_BillingAddress" FromRole="Address" ToRole="Order" />
           <NavigationProperty Name="Orders1" Relationship="SamStoreModel.FK_Order_ShippingAddress" FromRole="Address" ToRole="Order" />
         </EntityType>
@@ -536,10 +559,11 @@ warning 6002: The table/view 'SamStore.dbo.State' does not have a primary key de
           <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
           <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
-          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="7" />
           <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
           <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
           <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Addresses" Relationship="SamStoreModel.FK_Address_AspNetUsers" FromRole="AspNetUser" ToRole="Address" />
           <NavigationProperty Name="AspNetUserClaims" Relationship="SamStoreModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserClaim" />
           <NavigationProperty Name="AspNetUserLogins" Relationship="SamStoreModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserLogin" />
           <NavigationProperty Name="Orders" Relationship="SamStoreModel.FK_Order_AspNetUsers" FromRole="AspNetUser" ToRole="Order" />
@@ -552,8 +576,8 @@ warning 6002: The table/view 'SamStore.dbo.State' does not have a primary key de
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CategoryName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="CategoryDescription" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
           <NavigationProperty Name="CategoryProducts" Relationship="SamStoreModel.FK_CategoryProduct_Category" FromRole="Category" ToRole="CategoryProduct" />
         </EntityType>
         <EntityType Name="CategoryProduct">
@@ -563,8 +587,8 @@ warning 6002: The table/view 'SamStore.dbo.State' does not have a primary key de
           </Key>
           <Property Name="CategoryID" Type="Int32" Nullable="false" />
           <Property Name="ProductID" Type="Int32" Nullable="false" />
-          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
           <NavigationProperty Name="Category" Relationship="SamStoreModel.FK_CategoryProduct_Category" FromRole="CategoryProduct" ToRole="Category" />
           <NavigationProperty Name="Product" Relationship="SamStoreModel.FK_CategoryProduct_Product" FromRole="CategoryProduct" ToRole="Product" />
         </EntityType>
@@ -575,10 +599,10 @@ warning 6002: The table/view 'SamStore.dbo.State' does not have a primary key de
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="OrderNumber" Type="Guid" />
           <Property Name="Inventory" Type="Int32" Nullable="false" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="7" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="7" />
           <Property Name="PurchaserEmail" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="Completed" Type="DateTime" Precision="3" />
+          <Property Name="Completed" Type="DateTime" Precision="7" />
           <Property Name="ShipCareOf" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="ShippingAddressID" Type="Int32" />
           <Property Name="BillingAddressID" Type="Int32" />
@@ -596,8 +620,8 @@ warning 6002: The table/view 'SamStore.dbo.State' does not have a primary key de
           <Property Name="OrderID" Type="Int32" Nullable="false" />
           <Property Name="ProductID" Type="Int32" Nullable="false" />
           <Property Name="Quantity" Type="Int32" Nullable="false" />
-          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="7" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="7" />
           <NavigationProperty Name="Order" Relationship="SamStoreModel.FK_OrderProduct_Order" FromRole="OrderProduct" ToRole="Order" />
           <NavigationProperty Name="Product" Relationship="SamStoreModel.FK_OrderProduct_Product" FromRole="OrderProduct" ToRole="Product" />
         </EntityType>
@@ -614,8 +638,8 @@ warning 6002: The table/view 'SamStore.dbo.State' does not have a primary key de
           <Property Name="Inventory" Type="Int32" Nullable="false" />
           <Property Name="TreeSpecies" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="TreeSkill" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="7" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="7" />
           <NavigationProperty Name="CategoryProducts" Relationship="SamStoreModel.FK_CategoryProduct_Product" FromRole="Product" ToRole="CategoryProduct" />
           <NavigationProperty Name="OrderProducts" Relationship="SamStoreModel.FK_OrderProduct_Product" FromRole="Product" ToRole="OrderProduct" />
           <NavigationProperty Name="ProductImages" Relationship="SamStoreModel.FK_ProductImage_Product" FromRole="Product" ToRole="ProductImage" />
@@ -629,8 +653,8 @@ warning 6002: The table/view 'SamStore.dbo.State' does not have a primary key de
           <Property Name="ImagePath" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="ImageDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="ProductID" Type="Int32" />
-          <Property Name="CompletedDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="CompletedDate" Type="DateTime" Precision="7" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="7" />
           <NavigationProperty Name="Product" Relationship="SamStoreModel.FK_ProductImage_Product" FromRole="ProductImage" ToRole="Product" />
         </EntityType>
         <EntityType Name="Review">
@@ -642,8 +666,8 @@ warning 6002: The table/view 'SamStore.dbo.State' does not have a primary key de
           <Property Name="Rating" Type="Int32" Nullable="false" />
           <Property Name="Email" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="Body" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
           <NavigationProperty Name="Product" Relationship="SamStoreModel.FK_Review_Product" FromRole="Review" ToRole="Product" />
         </EntityType>
         <EntityType Name="State">
@@ -656,6 +680,18 @@ warning 6002: The table/view 'SamStore.dbo.State' does not have a primary key de
           <Property Name="Created" Type="DateTime" Precision="3" />
           <Property Name="Modified" Type="DateTime" Precision="3" />
         </EntityType>
+        <Association Name="FK_Address_AspNetUsers">
+          <End Type="SamStoreModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
+          <End Type="SamStoreModel.Address" Role="Address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Address">
+              <PropertyRef Name="AspNetUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Order_BillingAddress">
           <End Type="SamStoreModel.Address" Role="Address" Multiplicity="0..1" />
           <End Type="SamStoreModel.Order" Role="Order" Multiplicity="*" />
@@ -802,7 +838,7 @@ warning 6002: The table/view 'SamStore.dbo.State' does not have a primary key de
           <End Type="SamStoreModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
           <End Type="SamStoreModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
         </Association>
-        </Schema>
+      </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -811,6 +847,7 @@ warning 6002: The table/view 'SamStore.dbo.State' does not have a primary key de
           <EntitySetMapping Name="Addresses">
             <EntityTypeMapping TypeName="SamStoreModel.Address">
               <MappingFragment StoreEntitySet="Address">
+                <ScalarProperty Name="AspNetUserID" ColumnName="AspNetUserID" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="ShippingZip" ColumnName="ShippingZip" />

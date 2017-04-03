@@ -11,7 +11,7 @@ namespace samStore.Models
     public class IdentityModels : IdentityDbContext<User>
     {
         public IdentityModels()
-            : base("name=SamStore")
+            : base("name=samStore")
         {
 
         }

@@ -50,5 +50,9 @@ namespace samStore.Models
         [Required(ErrorMessage = "Please input your Zip-Code to continue")]
         public string ShippingZip { get; set; }
 
+
+        public string tempLocation { get; set; }
+        public string tempOrder { get; set; }
+
     }
 }

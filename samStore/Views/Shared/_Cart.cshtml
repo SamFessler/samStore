@@ -1,6 +1,7 @@
 ﻿
+
 <ul class="nav navbar-nav navbar-right">
-    <li><a href="/cart"><span class="badge">@(ViewBag.ItemsInCart ?? 0)</span><span class="glyphicon glyphicon-shopping-cart"></span>Cart</a></li>
+    <li><a href="/cart"><span class="badge"></span>@(ViewBag.ItemsInCart ?? 0)<span class="glyphicon glyphicon-shopping-cart"></span>Cart</a></li>
     @if (User.Identity.IsAuthenticated)
     {
         <li>@Html.ActionLink("Logout as "+User.Identity.Name,"Logout","Account")</li>

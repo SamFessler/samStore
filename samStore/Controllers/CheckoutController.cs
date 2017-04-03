@@ -13,6 +13,8 @@ namespace samStore.Controllers
 {
     public class CheckoutController : Controller
     {
+        string WhatWasOrdered = "";
+        string WhereTo = "";
 
         // GET: Checkout
         public ActionResult Index()
@@ -30,12 +32,14 @@ namespace samStore.Controllers
             if (ModelState.IsValid)
             {
                 //validated
-                //TODO persist this order to the database and redirect to reciept page
+
                 //string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["SamStore"].ConnectionString;
+
 
 
                 using (SamStoreEntities entities = new SamStoreEntities())
                 {
+
                     Order o = null;
                     if (User.Identity.IsAuthenticated)
                     {
@@ -44,6 +48,9 @@ namespace samStore.Controllers
                         if (o == null)
                         {
                             o = new Order();
+                            o.ModifiedDate = DateTime.Now;
+                            o.CreatedDate = DateTime.Now;
+                            o.Completed = DateTime.Now;
                             o.OrderNumber = Guid.NewGuid();
                             currentUser.Orders.Add(o);
                             entities.SaveChanges();
@@ -59,6 +66,9 @@ namespace samStore.Controllers
                         if (o == null)
                         {
                             o = new Order();
+                            o.ModifiedDate = DateTime.Now;
+                            o.CreatedDate = DateTime.Now;
+                            o.Completed = DateTime.Now;
                             o.OrderNumber = Guid.NewGuid();
                             entities.Orders.Add(o);
                             Response.Cookies.Add(new HttpCookie("orderNumber", o.OrderNumber.ToString()));
@@ -70,18 +80,20 @@ namespace samStore.Controllers
                         return RedirectToAction("Index", "Cart");
                     }
 
-                    o.PurchaserEmail = User.Identity.Name;
-                    Address newShippingAddress = new Address();
 
+                    o.PurchaserEmail = User.Identity.Name;
+
+                    Address newShippingAddress = new Address();
+                    
                     newShippingAddress.ShippingAddress1 = model.ShippingAddress1;
                     newShippingAddress.ShippingAddress2 = model.ShippingAddress2;
                     newShippingAddress.ShippingCity = model.ShippingCity;
                     newShippingAddress.ShippingState = model.ShippingState;
                     newShippingAddress.ShippingZip = model.ShippingZip;
-
+                     
                     o.Address1 = newShippingAddress;
-
-
+                     
+                    WhereTo = "\n Your Order will be shipped to the following address: \n"+model.ShippingAddress1 + "\n "+ model.ShippingAddress2 +"\n "+ model.ShippingCity+"\n " + model.ShippingState +"\n "+ model.ShippingZip;
                     //entities.sp_CompleteOrder(o.ID);
 
 
@@ -125,36 +137,49 @@ namespace samStore.Controllers
                         return View(model);
                     };
 
-                    string sendGridApiKey = ConfigurationManager.AppSettings["SendGrid.ApiKey"];
+                    string sendGridKey = ConfigurationManager.AppSettings["SendGrid.ApiKey"];
 
-                    SendGrid.SendGridClient client = new SendGrid.SendGridClient(sendGridApiKey);
+                    SendGrid.SendGridClient client = new SendGrid.SendGridClient(sendGridKey);
                     SendGrid.Helpers.Mail.SendGridMessage message = new SendGrid.Helpers.Mail.SendGridMessage();
-                    message.SetTemplateId("524c7845-3ed9-4d53-81c8-b467443f8c5c");
                     message.Subject = string.Format("Receipt for order {0}", o.ID);
-                    message.From = new SendGrid.Helpers.Mail.EmailAddress("admin@boardgames.codingtemple.com", "Coding Temple Board Games Administrator");
-                    message.AddTo(new SendGrid.Helpers.Mail.EmailAddress(model.EmailAddress));
-                    SendGrid.Helpers.Mail.Content contents = new SendGrid.Helpers.Mail.Content("text/plain", "Thank you for placing an order with Coding Temple Board Games");
+                    message.From = new SendGrid.Helpers.Mail.EmailAddress("Admin@ArtOfBonsai.com", "Art Of Bonsai Admin");
+                    message.AddTo(new SendGrid.Helpers.Mail.EmailAddress(o.PurchaserEmail));
 
+                    string prodcuctsReceipt = "You've Ordered: ";
+                    WhatWasOrdered = prodcuctsReceipt;
+
+                    foreach (var item in o.OrderProducts)
+                    {
+                        string addition = string.Format("\n " + "{0} copies of {1}", item.Quantity, item.Product.ProductName);
+                        prodcuctsReceipt += addition;
+
+                    }
+
+                    SendGrid.Helpers.Mail.Content contents = new SendGrid.Helpers.Mail.Content("text/plain", string.Format("Thank you for ordering through Art Of Bonsai \n {0} {1}",prodcuctsReceipt,WhereTo));
+                    
                     message.AddSubstitution("%ordernum%", o.ID.ToString());
                     message.AddContent(contents.Type, contents.Value);
-                    //foreach (var item in o.OrderProducts)
-                    //{
-                    //    SendGrid.Helpers.Mail.Content contents2 = new SendGrid.Helpers.Mail.Content("text/plain", string.Format("You've ordered {0} copies of {1}", item.Quantity, item.Product.Name));
 
-                    //    message.AddContent(contents2.Type, contents2.Value);
-                    //}
+
+
 
                     SendGrid.Response response = await client.SendEmailAsync(message);
 
+
+                    o.Completed = DateTime.Now;
+                    entities.SaveChanges();
                 }
-                return RedirectToAction("Index", "Receipt");
+
+
+
+
+                return RedirectToAction("index", "Home");
 
             }
             return View(model);
 
         }
 
-    
 
 
 

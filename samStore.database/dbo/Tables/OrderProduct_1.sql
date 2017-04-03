@@ -3,8 +3,8 @@
 	[OrderID] INT NOT NULL,
 	[ProductID] INT NOT NULL, 
 	[Quantity] INT NOT NULL DEFAULT(1),
-	[CreatedDate] DATETIME NOT NULL DEFAULT GetUtcDate(),
-	[ModifiedDate] DATETIME NOT NULL DEFAULT GetUtcDate(), 
+	[CreatedDate] DATETIME2  NULL DEFAULT GetUtcDate(),
+	[ModifiedDate] DATETIME2  NULL DEFAULT GetUtcDate(), 
 
 	CONSTRAINT [PK_OrderProduct] PRIMARY KEY ([ProductID], [OrderID]), 
     CONSTRAINT [FK_OrderProduct_Order] FOREIGN KEY (OrderID) REFERENCES [Order](ID) ON DELETE CASCADE, 

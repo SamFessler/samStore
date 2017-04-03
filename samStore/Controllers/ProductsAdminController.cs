@@ -55,7 +55,7 @@ namespace samStore.Controllers
         {
             if (ModelState.IsValid)
             {
-                product.ModifiedDate = DateTime.UtcNow;
+                product.ModifiedDate = DateTime.Now;
                 db.Entry(product).State = EntityState.Modified;
 
                 string filename = image.FileName;
@@ -71,7 +71,7 @@ namespace samStore.Controllers
                 {
                     ProductImage newImage = db.ProductImages.FirstOrDefault(x => x.ProductID == product.ID);
                     newImage.ImagePath = "/Content/Images/" + filename;
-                    newImage.ModifiedDate = DateTime.UtcNow;
+                    newImage.ModifiedDate = DateTime.Now;
 
                 }
                 else
@@ -79,8 +79,8 @@ namespace samStore.Controllers
                     product.ProductImages.Add(new ProductImage
                     {
                         ImagePath = "/Content/Images/" + image.FileName,
-                        CompletedDate = DateTime.UtcNow,
-                        ModifiedDate = DateTime.UtcNow
+                        CompletedDate = DateTime.Now,
+                        ModifiedDate = DateTime.Now
 
                     });
                 }
@@ -116,7 +116,7 @@ namespace samStore.Controllers
             if (ModelState.IsValid)
             {
 
-                product.ModifiedDate = DateTime.UtcNow;
+                product.ModifiedDate = DateTime.Now;
                 db.Entry(product).State = EntityState.Modified;
 
                 string filename = image.FileName;
@@ -155,7 +155,7 @@ namespace samStore.Controllers
                 //{
                 //    ProductImage newImage = db.ProductImages.FirstOrDefault(x => x.ProductID == product.ID);
                 //    newImage.ImagePath = "/Content/Images/" + image.FileName;
-                //    newImage.ModifiedDate = DateTime.UtcNow;
+                //    newImage.ModifiedDate = DateTime.Now;
 
                 //}
                 //else
@@ -163,8 +163,8 @@ namespace samStore.Controllers
                 //    product.ProductImages.Add(new ProductImage
                 //    {
                 //        ImagePath = "/Content/Images/" + image.FileName,
-                //        CompletedDate = DateTime.UtcNow,
-                //        ModifiedDate = DateTime.UtcNow
+                //        CompletedDate = DateTime.Now,
+                //        ModifiedDate = DateTime.Now
 
                 //    });
                 //}

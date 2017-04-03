@@ -172,6 +172,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\CartItemCalculatorAttribute.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -185,65 +186,68 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Address.cs">
-      <DependentUpon>SamStoreModels.tt</DependentUpon>
+      <DependentUpon>SamStoreEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AspNetRole.cs">
-      <DependentUpon>SamStoreModels.tt</DependentUpon>
+      <DependentUpon>SamStoreEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AspNetUser.cs">
-      <DependentUpon>SamStoreModels.tt</DependentUpon>
+      <DependentUpon>SamStoreEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AspNetUserClaim.cs">
-      <DependentUpon>SamStoreModels.tt</DependentUpon>
+      <DependentUpon>SamStoreEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AspNetUserLogin.cs">
-      <DependentUpon>SamStoreModels.tt</DependentUpon>
+      <DependentUpon>SamStoreEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CartItemModel.cs" />
     <Compile Include="Models\CartModel.cs" />
     <Compile Include="Models\Category.cs">
-      <DependentUpon>SamStoreModels.tt</DependentUpon>
+      <DependentUpon>SamStoreEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CategoryProduct.cs">
-      <DependentUpon>SamStoreModels.tt</DependentUpon>
+      <DependentUpon>SamStoreEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CheckoutModel.cs" />
-    <Compile Include="Models\State.cs">
-      <DependentUpon>SamStoreModels.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\Order.cs">
-      <DependentUpon>SamStoreModels.tt</DependentUpon>
+      <DependentUpon>SamStoreEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\OrderContainerModel.cs" />
+    <Compile Include="Models\OrderModel.cs" />
     <Compile Include="Models\OrderProduct.cs">
-      <DependentUpon>SamStoreModels.tt</DependentUpon>
+      <DependentUpon>SamStoreEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\OrderUserModel.cs" />
     <Compile Include="Models\Product.cs">
-      <DependentUpon>SamStoreModels.tt</DependentUpon>
+      <DependentUpon>SamStoreEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ProductImage.cs">
-      <DependentUpon>SamStoreModels.tt</DependentUpon>
+      <DependentUpon>SamStoreEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ProductModel.cs" />
     <Compile Include="Models\RegisterModel.cs" />
     <Compile Include="Models\Review.cs">
-      <DependentUpon>SamStoreModels.tt</DependentUpon>
+      <DependentUpon>SamStoreEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\SamStoreModels.Context.cs">
+    <Compile Include="Models\SamStoreEntities.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>SamStoreModels.Context.tt</DependentUpon>
+      <DependentUpon>SamStoreEntities.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\SamStoreModels.cs">
+    <Compile Include="Models\SamStoreEntities.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>SamStoreModels.tt</DependentUpon>
+      <DependentUpon>SamStoreEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\SamStoreModels.Designer.cs">
+    <Compile Include="Models\SamStoreEntities.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>SamStoreModels.edmx</DependentUpon>
+      <DependentUpon>SamStoreEntities.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\State.cs">
+      <DependentUpon>SamStoreEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\StateModel.cs" />
     <Compile Include="Models\StudentModel.cs" />
@@ -263,13 +267,6 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
-    <EntityDeploy Include="Models\SamStoreModels.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>SamStoreModels.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\SamStoreModels.edmx.diagram">
-      <DependentUpon>SamStoreModels.edmx</DependentUpon>
-    </Content>
     <Content Include="Content\Fonts\DK Momotaro.ttf" />
     <Content Include="Content\Fonts\lastninja.ttf" />
     <Content Include="Content\Fonts\Korean Calligraphy.ttf" />
@@ -278,16 +275,23 @@
     <Content Include="Content\Fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\Fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\Fonts\glyphicons-halflings-regular.woff2" />
-    <None Include="Scripts\jquery-3.1.1.intellisense.js" />
-    <Content Include="Models\SamStoreModels.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>SamStoreModels.edmx</DependentUpon>
-      <LastGenOutput>SamStoreModels.Context.cs</LastGenOutput>
+    <EntityDeploy Include="Models\SamStoreEntities.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>SamStoreEntities.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\SamStoreEntities.edmx.diagram">
+      <DependentUpon>SamStoreEntities.edmx</DependentUpon>
     </Content>
-    <Content Include="Models\SamStoreModels.tt">
+    <None Include="Scripts\jquery-3.1.1.intellisense.js" />
+    <Content Include="Models\SamStoreEntities.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>SamStoreModels.edmx</DependentUpon>
-      <LastGenOutput>SamStoreModels.cs</LastGenOutput>
+      <DependentUpon>SamStoreEntities.edmx</DependentUpon>
+      <LastGenOutput>SamStoreEntities.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\SamStoreEntities.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>SamStoreEntities.edmx</DependentUpon>
+      <LastGenOutput>SamStoreEntities.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -306,7 +310,9 @@
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -334,6 +340,7 @@
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\ConfirmSent.cshtml" />
+    <Content Include="Views\Home\Profile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

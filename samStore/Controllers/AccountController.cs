@@ -9,6 +9,8 @@ using System.Web.Mvc;
 using System.Web.Security;
 using System.Threading.Tasks;
 using System.Configuration;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace samStore.Controllers
 {
@@ -25,6 +27,106 @@ namespace samStore.Controllers
 
             return View(new RegisterModel());
         }
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //[AllowAnonymous]
+        ////[RecaptchaControlMvc.CaptchaValidator]
+        //public virtual async Task<ActionResult> ResetPassword(
+        //                                      ResetPasswordViewModel rpvm)
+        //{
+        //    string message = null;
+        //    //the token is valid for one day
+        //    var until = DateTime.Now.AddDays(1);
+        //    //We find the user, as the token can not generate the e-mail address, 
+        //    //but the name should be.
+        //    var db = new Context();
+        //    var user = db.Users.SingleOrDefault(x => x.Email == rpvm.Email);
+
+        //    var token = new StringBuilder();
+
+        //    //Prepare a 10-character random text
+        //    using (RNGCryptoServiceProvider
+        //                        rngCsp = new RNGCryptoServiceProvider())
+        //    {
+        //        var data = new byte[4];
+        //        for (int i = 0; i < 10; i++)
+        //        {
+        //            //filled with an array of random numbers
+        //            rngCsp.GetBytes(data);
+        //            //this is converted into a character from A to Z
+        //            var randomchar = Convert.ToChar(
+        //                                      //produce a random number 
+        //                                      //between 0 and 25
+        //                                      BitConverter.ToUInt32(data, 0) % 26
+        //                                      //Convert.ToInt32('A')==65
+        //                                      + 65
+        //                             );
+        //            token.Append(randomchar);
+        //        }
+        //    }
+        //    //This will be the password change identifier 
+        //    //that the user will be sent out
+        //    var tokenid = token.ToString();
+
+        //    if (null != user)
+        //    {
+        //        //Generating a token
+        //        var result = await IdentityManager
+        //                                .Passwords
+        //                                .GenerateResetPasswordTokenAsync(
+        //                                              tokenid,
+        //                                              user.UserName,
+        //                                              until
+        //                           );
+
+        //        if (result.Success)
+        //        {
+        //            //send the email
+                
+        //}
+        //    }
+        //    message =
+        //        "We have sent a password reset request if the email is verified.";
+        //    return RedirectToAction(
+        //                   samStore.AccountController.ResetPasswordWithToken(
+        //                               token: string.Empty,
+        //                               message: message
+        //                   )
+        //           );
+        //}
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //[AllowAnonymous]
+        ////[RecaptchaControlMvc.CaptchaValidator]
+        //public virtual async Task<ActionResult> ResetPasswordWithToken(
+        //                                    ResetPasswordWithTokenViewModel
+        //                                                rpwtvm
+        //                                )
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        string message = null;
+        //        //reset the password
+        //        var result = await IdentityManager.Passwords.ResetPasswordAsync(
+        //                                                   rpwtvm.Token,
+        //                                                   rpwtvm.Password
+        //                           );
+        //        if (result.Success)
+        //        {
+        //            message = "the password has been reset.";
+        //            return RedirectToAction(
+        //                        MVC.Account.ResetPasswordCompleted(message: message)
+        //                   );
+        //        }
+        //        else
+        //        {
+        //            AddErrors(result);
+        //        }
+        //    }
+        //    return View(MVC.Account.ResetPasswordWithToken(rpwtvm));
+        //}
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -77,7 +179,7 @@ namespace samStore.Controllers
                         SendGrid.SendGridClient client = new SendGrid.SendGridClient(sendGridKey);
                         SendGrid.Helpers.Mail.SendGridMessage message = new SendGrid.Helpers.Mail.SendGridMessage();
                         message.Subject = string.Format("Please confirm your account");
-                        message.From = new SendGrid.Helpers.Mail.EmailAddress("admin@boardgames.codingtemple.com", "Coding Temple Board Games Administrator");
+                        message.From = new SendGrid.Helpers.Mail.EmailAddress("Admin@apples4pears.net", "Art Of Bonsai Admin");
                         message.AddTo(new SendGrid.Helpers.Mail.EmailAddress(model.EmailAddress));
                         SendGrid.Helpers.Mail.Content contents = new SendGrid.Helpers.Mail.Content("text/html", string.Format("<a href=\"{0}\">Confirm Account</a>", Request.Url.GetLeftPart(UriPartial.Authority) + "/Account/Confirm/" + confermationToken + "?email=" + model.EmailAddress));
 
@@ -102,6 +204,15 @@ namespace samStore.Controllers
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
+
+         
+            if (Request.Cookies["orderNumber"] != null)
+            {
+                var c = new HttpCookie("orderNumber");
+                c.Expires = DateTime.Now.AddDays(-1);
+                Response.Cookies.Add(c);
+            }
+
             return RedirectToAction("Index", "Home");
 
         }

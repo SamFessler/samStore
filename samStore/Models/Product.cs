@@ -32,8 +32,8 @@ namespace samStore.Models
         public int Inventory { get; set; }
         public string TreeSpecies { get; set; }
         public string TreeSkill { get; set; }
-        public System.DateTime CreatedDate { get; set; }
-        public System.DateTime ModifiedDate { get; set; }
+        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public Nullable<System.DateTime> ModifiedDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CategoryProduct> CategoryProducts { get; set; }

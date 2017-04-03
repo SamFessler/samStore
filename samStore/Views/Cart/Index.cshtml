@@ -26,7 +26,7 @@
             <tr>
                 <td>@item.Product.TreeName</td>
                 <td>@item.Quantity</td>
-                <td><button disabled class="btn btn-default">Remove</button></td>
+                <td><button class="btn btn-default" id="removeCartItem">Remove</button></td>
                 <td>@item.Product.TreePrice.</td>
             </tr>
         }
@@ -40,4 +40,6 @@
 </table>
 
 @Html.ActionLink("Checkout", "Index", "Checkout", null, new { @class = "btn btn-primary"})
+
+
 

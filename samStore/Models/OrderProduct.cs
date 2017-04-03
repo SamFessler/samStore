@@ -17,8 +17,8 @@ namespace samStore.Models
         public int OrderID { get; set; }
         public int ProductID { get; set; }
         public int Quantity { get; set; }
-        public System.DateTime CreatedDate { get; set; }
-        public System.DateTime ModifiedDate { get; set; }
+        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public Nullable<System.DateTime> ModifiedDate { get; set; }
     
         public virtual Order Order { get; set; }
         public virtual Product Product { get; set; }

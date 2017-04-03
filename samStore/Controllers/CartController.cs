@@ -63,7 +63,7 @@ namespace samStore.Controllers
 
                 model.SubTotal = o.OrderProducts.Sum(x => x.Product.ProductPrice * x.Quantity);
             }
-            ViewBag.PageGenerationTime = DateTime.UtcNow;
+            ViewBag.PageGenerationTime = DateTime.Now;
             return View(model);
         }
     }

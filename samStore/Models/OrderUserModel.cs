@@ -5,9 +5,9 @@ using System.Web;
 
 namespace samStore.Models
 {
-    public class CartItemModel
+    public class OrderUserModel
     {
-      public ProductModel Product { get; set; }
-      public int? Quantity { get; set; }
+        public OrderModel Order { get; set; }
+        public int? OrderQuantity { get; set; }
     }
 }

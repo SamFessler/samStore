@@ -7,7 +7,7 @@
     [PhoneNumber]          NVARCHAR (MAX) NULL,
     [PhoneNumberConfirmed] BIT            NOT NULL,
     [TwoFactorEnabled]     BIT            NOT NULL,
-    [LockoutEndDateUtc]    DATETIME       NULL,
+    [LockoutEndDateUtc]    DATETIME2       NULL,
     [LockoutEnabled]       BIT            NOT NULL,
     [AccessFailedCount]    INT            NOT NULL,
     [UserName]             NVARCHAR (256) NOT NULL,
