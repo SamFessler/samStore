@@ -228,6 +228,7 @@
     </Compile>
     <Compile Include="Models\ProductModel.cs" />
     <Compile Include="Models\RegisterModel.cs" />
+    <Compile Include="Models\ResetPasswordViewModel.cs" />
     <Compile Include="Models\Review.cs">
       <DependentUpon>SamStoreEntities.tt</DependentUpon>
     </Compile>
@@ -341,6 +342,7 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\ConfirmSent.cshtml" />
     <Content Include="Views\Home\Profile.cshtml" />
+    <Content Include="Views\Account\ResetPassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

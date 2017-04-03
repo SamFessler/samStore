@@ -11,6 +11,9 @@ using System.Threading.Tasks;
 using System.Configuration;
 using System.Security.Cryptography;
 using System.Text;
+using Microsoft.Ajax.Utilities;
+
+
 
 namespace samStore.Controllers
 {
@@ -83,8 +86,8 @@ namespace samStore.Controllers
         //        if (result.Success)
         //        {
         //            //send the email
-                
-        //}
+
+        //        }
         //    }
         //    message =
         //        "We have sent a password reset request if the email is verified.";
@@ -96,37 +99,6 @@ namespace samStore.Controllers
         //           );
         //}
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //[AllowAnonymous]
-        ////[RecaptchaControlMvc.CaptchaValidator]
-        //public virtual async Task<ActionResult> ResetPasswordWithToken(
-        //                                    ResetPasswordWithTokenViewModel
-        //                                                rpwtvm
-        //                                )
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        string message = null;
-        //        //reset the password
-        //        var result = await IdentityManager.Passwords.ResetPasswordAsync(
-        //                                                   rpwtvm.Token,
-        //                                                   rpwtvm.Password
-        //                           );
-        //        if (result.Success)
-        //        {
-        //            message = "the password has been reset.";
-        //            return RedirectToAction(
-        //                        MVC.Account.ResetPasswordCompleted(message: message)
-        //                   );
-        //        }
-        //        else
-        //        {
-        //            AddErrors(result);
-        //        }
-        //    }
-        //    return View(MVC.Account.ResetPasswordWithToken(rpwtvm));
-        //}
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -250,6 +222,27 @@ namespace samStore.Controllers
             return RedirectToAction("Index", "Home");
 
         }
+
+        //public ActionResult Reset(string id, string email)
+        //{
+        //    using (IdentityModels entities = new IdentityModels())
+        //    {
+        //        var userStore = new UserStore<User>(entities);
+
+        //        var manager = new UserManager<User>(userStore);
+        //        manager.UserTokenProvider = new EmailTokenProvider<User>();
+        //        var user = manager.FindByName(email);
+        //        if (user != null)
+        //        {
+        //            var result = manager.ResetPassword(user.Id, id);
+        //            if (result.Succeeded)
+        //            {
+        //                TempData.Add("PasswordReset", true);
+        //                return RedirectToAction("Login");
+        //            }
+        //        }
+        //    }
+        //}
 
         [HttpPost]
         [ValidateAntiForgeryToken]

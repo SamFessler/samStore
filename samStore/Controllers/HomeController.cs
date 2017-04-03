@@ -31,42 +31,41 @@ namespace samStore.Controllers
             return View();
         }
 
-        //public ActionResult Profile()
-        //{
-        //    OrderContainerModel ModelList = new OrderContainerModel();
+        [ActionName("Profile")]
+        public ActionResult ProfileAction()
+        {
+            OrderContainerModel ModelList = new OrderContainerModel();
 
-        //    using (SamStoreEntities entities = new SamStoreEntities())
-        //    {
+            using (SamStoreEntities entities = new SamStoreEntities())
+            {
 
-                
+                if (User.Identity.IsAuthenticated)
+                {
+                    AspNetUser currentUser = entities.AspNetUsers.Single(x => x.UserName == User.Identity.Name);
 
-        //        int i = 0;
+                    
+                    ModelList.Orders = currentUser.Orders.Select(x => new OrderUserModel
+                    {
+                        Order = new OrderModel
+                        {
+                            Id = x.ID,
+                            ShippingAddress = x.Address.ShippingAddress1,
+                            EmailUsed = x.PurchaserEmail,
+                            TimeCompleted = x.Completed.ToString(),
+                            Products = x.OrderProducts.Select(y => new OrderProduct {
+                                Product = new Product { ProductName = y.Product.ProductName, ProductPrice = y.Product.ProductPrice   }
 
-        //        if (User.Identity.IsAuthenticated)
-        //        {
-        //            AspNetUser currentUser = entities.AspNetUsers.Single(x => x.UserName == User.Identity.Name);
+                            })
+                          
+                            
+                        },
 
-        //            Order o = currentUser.Orders.FirstOrDefault(x => new OrderUserModel
-        //            {
-        //                Order = new OrderModel
-        //                {
-        //                    Id = x.ID,
-        //                    ShippingAddress = x.Address.ShippingAddress1,
-
-        //               },
-
-        //            }).ToArray();
-        //                   // userOrders.Order[i] = currentUser.Orders.FirstOrDefault(x => x.Completed != null && x.ID != userOrders.OrdersNum[i])
-        //                   //userOrder.OrdersNum[i]
-
-        //        }
-
-        //    }
-
-        //    ViewBag.Message = "Your Profile";
-
-        //    return View();
-        //}
+                    }).ToArray();
+                }
+            }
+            ViewBag.Message = "Your Profile";
+            return View(ModelList);
+        }
     }
 
    

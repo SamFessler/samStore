@@ -12,11 +12,11 @@ namespace samStore.Models
         public string OrderNumber { get; set; }
         public string ShippingAddress { get; set; }
         public IEnumerable<OrderProduct> Products { get; set; }
-        public int Tester { get; set; }
+       
+        public string EmailUsed { get; set; }
+        public string TimeCompleted { get; set; }
 
 
 
-        //public DateTime OrderAccepted
-        //public DATEtIME OrderShipped
     }
 }

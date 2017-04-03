@@ -1,7 +1,33 @@
-﻿
+﻿@model samStore.Models.OrderContainerModel
+
 @{
     ViewBag.Title = "Profile";
 }
 
 <h2>Profile</h2>
+<h3>Your Completed Orders</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Order Number</th>
+            <th>Email</th>
+            <th>Shipped To</th>
+            <th>Ordered On</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Orders)
+        {
+            <tr>
+                <td>@item.Order.OrderNumber</td>
+                <td>@item.Order.EmailUsed</td>
+                <td>@item.Order.ShippingAddress</td>
+                <td>@item.Order.TimeCompleted</td>
+                <td>@item.Order.Products</td>
+                <td></td>
+                
+            </tr>
+        }
+    </tbody>
+</table>
 
