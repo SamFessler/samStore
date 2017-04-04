@@ -4,15 +4,12 @@
     ViewBag.Title = "Profile";
 }
 
-<h2>Profile</h2>
 <h3>Your Completed Orders</h3>
 <table class="table">
     <thead>
         <tr>
             <th>Order Number</th>
             <th>Email</th>
-            <th>Shipped To</th>
-            <th>Ordered On</th>
         </tr>
     </thead>
     <tbody>
@@ -27,9 +24,9 @@
         foreach (var product in @item.Order.Products)
         {
             <tr>
-                @*<td>@item.Order.ShippingAddress</td>*@
                 <td>@product.Product.ProductName</td>
-                <td>@product.Product.ProductPrice</td>
+                <td>@product.Product.ProductPrice.ToString("C")</td>
+               
             </tr>
              }
          }

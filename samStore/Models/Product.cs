@@ -24,7 +24,6 @@ namespace samStore.Models
         }
     
         public int ID { get; set; }
-        public Nullable<int> ProductID { get; set; }
         public string ProductName { get; set; }
         public string ProductDescription { get; set; }
         public decimal ProductPrice { get; set; }

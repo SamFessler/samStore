@@ -118,8 +118,8 @@
 
     <div class="form-group">
         @Html.LabelFor(x => x.CreditCardExperation, new { @class = "control-label" })
-        <input type="date" name="CreditCardExpiration" class="form-control" />
-        @*@Html.TextBoxFor(x => x.CreditCardExperation, new { @class = "form-control", placeholder = "mm/yy" })*@
+        @*<input type="date" name="CreditCardExpiration" class="form-control" />*@
+        @Html.TextBoxFor(x => x.CreditCardExperation, new { @class = "form-control", placeholder = "mm/yy" })
         @Html.ValidationMessageFor(x => x.CreditCardExperation)
     </div>
 

@@ -10,6 +10,11 @@ namespace samStore.Models
     public class ResetPasswordViewModel
     {
 
+        public ResetPasswordViewModel()
+        {
+
+        }
+
         public ResetPasswordViewModel(string code, string email)
         {
             Code = code;
@@ -31,7 +36,5 @@ namespace samStore.Models
         [MinLength(7)]
         public string ConfirmPassword { get; set; }
 
-        
-       
     }
 }

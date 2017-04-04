@@ -8,26 +8,37 @@
 {
 
 }
+<div class="loginContainter">
+    <h2 id="loginHeader">Login</h2>
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken();
+    <div class="loginContainter">
 
-    @Html.LabelFor(x => x.EmailAddress)
-    @Html.TextBoxFor(x => x.EmailAddress)
-    @Html.ValidationMessageFor(x => x.EmailAddress)
-
-    @Html.LabelFor(x => x.Password)
-    @Html.PasswordFor(x => x.Password)
-    @Html.ValidationMessageFor(x => x.Password)
-
-    
-    <input type="submit" value="Login" />
-    @Html.ActionLink("Create New Account", "Register", "Account", new { @class = "btn btn-primary" })
-}
-
-<input type="button" value="ForgotPassword"  onclick="location.href='@Url.Action("ForgotPassword", "Account")'"/>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken();
+            <div class="loginCenter">
+                @Html.LabelFor(x => x.EmailAddress)
+                @Html.TextBoxFor(x => x.EmailAddress)
+                @Html.ValidationMessageFor(x => x.EmailAddress)
+            </div>
+            <div class="loginCenter">
+                @Html.LabelFor(x => x.Password)
+                @Html.PasswordFor(x => x.Password)
+                @Html.ValidationMessageFor(x => x.Password)
+            </div>
 
 
-<h2>Login</h2>
+
+            <input type="submit" value="Login" />
+            @Html.ActionLink("Create New Account", "Register", "Account", new { @class = "btn btn-default" })
+
+            <input type="button" value="ForgotPassword" onclick="location.href='@Url.Action("ForgotPassword", "Account")'" />
+        }
+    </div>
+</div>
+
+
+
+
+
 

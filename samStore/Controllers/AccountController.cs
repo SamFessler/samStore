@@ -169,9 +169,9 @@ namespace samStore.Controllers
             return View(new ForgotPasswordViewModel());
         }
 
-        public ActionResult ResetPasswordPage(string code, string email)
+        public ActionResult ResetPassword(string id, string EmailAddress)
         {
-            return View(new ResetPasswordViewModel(code,email));
+            return View(new ResetPasswordViewModel(id, EmailAddress));
         }
 
         public ActionResult ResetSent()
@@ -213,7 +213,7 @@ namespace samStore.Controllers
                     message.From = new SendGrid.Helpers.Mail.EmailAddress("Admin@apples4pears.net", "Art Of Bonsai Admin");
                     message.AddTo(new SendGrid.Helpers.Mail.EmailAddress(model.Email));
 
-                    SendGrid.Helpers.Mail.Content contents = new SendGrid.Helpers.Mail.Content("text/html", string.Format("<a href=\"{0}\">Reset Your Password</a>", Request.Url.GetLeftPart(UriPartial.Authority) + "/Account/ResetPasswordPage/" + code + "?EmailAddress=" + model.Email ));
+                    SendGrid.Helpers.Mail.Content contents = new SendGrid.Helpers.Mail.Content("text/html", string.Format("<a href=\"{0}\">Reset Your Password</a>", Request.Url.GetLeftPart(UriPartial.Authority) + "/Account/ResetPassword/" + code + "?EmailAddress=" + model.Email ));
 
                     message.AddContent(contents.Type, contents.Value);
                     SendGrid.Response response =  await client.SendEmailAsync(message);
@@ -229,14 +229,15 @@ namespace samStore.Controllers
 
         }
 
-        public ActionResult ResetPassword(string code, string email, string NewPassword)
+        [HttpPost]
+        public ActionResult ResetPassword(ResetPasswordViewModel model)
         {
             using (IdentityModels entities = new IdentityModels())
             {
                 var userStore = new UserStore<User>(entities);
 
                 var manager = new UserManager<User>(userStore);
-                var user = manager.FindByName(email);
+                var user = manager.FindByName(model.EmailAddress);
 
                 manager.UserTokenProvider = new EmailTokenProvider<User>();
 
@@ -244,7 +245,7 @@ namespace samStore.Controllers
 
                 if (user != null)
                 {
-                    var result = manager.ResetPassword(user.Id, code, NewPassword);
+                    var result = manager.ResetPassword(user.Id, model.Code, model.NewPassword);
                     if (result.Succeeded)
                     {
                         return RedirectToAction("Login");

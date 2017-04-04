@@ -4,38 +4,6 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
-
-
-@font-face {
-    font-family: ChineseTakeaway;
-    src: url('/Content/Fonts/Chinese Takeaway.ttf')
-}
-
-
-@font-face {
-    font-family: Momotaro;
-    src: url('/Content/Fonts/DK Momotaro.ttf');
-}
-
-@font-face {
-    font-family: Korean;
-    src: url('/Content/Fonts/Korean Calligraphy.ttf');
-}
-
-@font-face {
-    font-family: ninja;
-    src: url('/Content/Fonts/lastninja.ttf');
-}
-
-
-
-#titleHeader {
-    font-family: Momotaro;
-    font-size: 5em;
-}
-
-
-
 html {
   font-family: sans-serif;
   -webkit-text-size-adjust: 100%;
@@ -43,7 +11,6 @@ html {
 }
 body {
   margin: 0;
-  background-color: #BEA37F;
 }
 article,
 aside,

@@ -8,6 +8,7 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
+    
     <div class="navbar-simple">
         <div class="container">
             <div class="navbar-header">
@@ -16,14 +17,15 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("The Art of Bonsai", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                
             </div>
-            <div class="navbar-simple navbar-inner" >
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    <li>@Html.ActionLink("Trees","Index","Product",new { id = 1 }, null)</li>
+            <div class="navbar-simple" >
+                
+                <ul class="nav navbar-nav " link="#A72C23;">
+                    <li  id="titleLinks" link="#A72C23;"><span class="Logos">@Html.ActionLink("E", "Index", "Home", new { area = "" }, new { @class = "Logos", @style = "color:#737B26" })</span></li>
+                    <li  id="titleLinks"  link="#A72C23;">@Html.ActionLink("About", "About", "Home", null, new { @style = "color: #A72C23;" })</li>
+                    <li  id="titleLinks"  link=";">@Html.ActionLink("Contact", "Contact", "Home", null, new { @style = "color: #A72C23;" })</li>
+                    <li  id="titleLinks" >@Html.ActionLink("Trees","Trees","Home", new { @style = "color: #A72C23;" }, null)</li>
                     
                 </ul>
 
@@ -33,6 +35,7 @@
     </div>
 
     <div class="container body-content">
+        
         @RenderBody()
         <hr />
         <footer>

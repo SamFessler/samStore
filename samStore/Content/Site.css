@@ -25,7 +25,6 @@ textarea {
 }
 
 .navbar-simple .brand {
- 	padding-top: 15px;
 	padding-bottom: 15px;
 }
 .navbar-simple .navbar-inner {
@@ -44,10 +43,11 @@ textarea {
 	-webkit-box-shadow: none;
 	-moz-box-shadow: none;
 	box-shadow: none;
-	color: #777;
+	text-decoration-color: #A72C23;
+    color: #A72C23;
+
 	font-size: 13px;
-	padding-top: 15px;
-	padding-bottom: 15px;
+	padding-bottom: 1em;
 	font-weight: 600;
 }
 .navbar-simple .navbar-inner .nav li a:hover {
@@ -55,8 +55,107 @@ textarea {
 	-webkit-box-shadow: none;
 	-moz-box-shadow: none;
 	box-shadow: none;
-	color: #bf3604;
+	color: #DA2E2C;
 }		
 .navbar-simple .navbar-inner .nav li.active a {
-	color: #bf3604;
+    color: #A72C23;
+
+}
+
+@font-face {
+    font-family: ChineseTakeaway;
+    src: url('/Content/Fonts/Chinese Takeaway.ttf')
+}
+
+
+@font-face {
+    font-family: Momotaro;
+    src: url('/Content/Fonts/DK Momotaro.ttf');
+}
+
+@font-face {
+    font-family: Korean;
+    src: url('/Content/Fonts/Korean Calligraphy.ttf');
+}
+
+@font-face {
+    font-family: ninja;
+    src: url('/Content/Fonts/lastninja.ttf');
+}
+@font-face {
+    font-family: JapaneseDesigns;
+    src: url('/Content/Fonts/Japanese Designs.ttf')
+}
+
+body {
+  margin: 0;
+  background-color: #BEA37F;
+  
+}
+
+
+
+.Logos{
+    font-family: JapaneseDesigns;
+    font-size: 2em;
+
+}
+
+#titleHeader {
+    font-family: Momotaro;
+    font-size: 4em;
+
+}
+
+#titleLinks{
+    font-family: Korean;
+    font-size: 1.5em;
+    color: #A72C23;
+    text-decoration-color: #A72C23;
+ 
+}
+
+#banner {
+    background-image:url('http://bonsaibark.com/wp-content/uploads/Taikan91.jpg');
+    width:100%;
+}
+a{
+    color: #A72C23;
+    text-decoration-color: #A72C23;
+}
+
+#titleAllWrapper{
+
+    width: 100%;
+    height: 100%;
+}
+
+#leftSidebar{
+ min-width: 980px;
+ height: 100%;
+ background-image: url(Content/Images/TreeNoBack.png);
+}
+#rightSidebar{
+ min-width: 980px;
+ height: 100%;
+ background-image: url(Content/Images/TreeNoBack.png);
+}
+
+.loginCenter{
+    align-content: center;
+}
+.loginContainter{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    margin: auto;
+}
+#loginHeader{
+
+    font-family:Momotaro;
+    font-size: 2em;
+    color: #A72C23;
+    text-decoration-color: #A72C23;
+ 
+
 }

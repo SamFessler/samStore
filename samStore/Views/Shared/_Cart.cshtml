@@ -1,18 +1,18 @@
 ﻿
 
 <ul class="nav navbar-nav navbar-right">
-    <li><a href="/cart"><span class="badge"></span>@(ViewBag.ItemsInCart ?? 0)<span class="glyphicon glyphicon-shopping-cart"></span>Cart</a></li>
+    <li id="titleLinks"><a href="/cart">@*<span class="badge"></span>*@<span class="glyphicon glyphicon-shopping-cart"></span>Cart</a></li>
     @if (User.Identity.IsAuthenticated)
     {
-        <li>@Html.ActionLink("Logout as "+User.Identity.Name,"Logout","Account")</li>
-        <li>@Html.ActionLink("Profile","Profile","Home")</li>
+        <li  id="titleLinks">@Html.ActionLink("Logout as "+User.Identity.Name,"Logout","Account", null, new { @style = "color: #A72C23;" })</li>
+        <li  id="titleLinks">@Html.ActionLink("Profile","Profile","Home", null, new { @style = "color: #A72C23;" })</li>
     }
     else
     {
-        <li>@Html.ActionLink("Login", "Login", "Account")</li>
-        <li>@Html.ActionLink("Register", "Register", "Account")</li>
-        
-    }
+        <li  id="titleLinks">@Html.ActionLink("Login", "Login", "Account", null,  new { @style = "color: #A72C23;" })</li>
+        <li  id="titleLinks">@Html.ActionLink("Register", "Register", "Account", null, new { @style = "color: #A72C23;" })</li>
+
+                        }
 
 </ul>
 

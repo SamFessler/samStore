@@ -22,6 +22,26 @@ namespace samStore.Controllers
             return View();
         }
 
+        public async Task<ActionResult> Trees()
+        {
+            using (SamStoreEntities entities = new SamStoreEntities())
+            {
+                var model = await entities.Products.Select(
+
+                    x => new ProductModel
+                    {
+                        Id =x.ID,
+                        TreeName = x.ProductName,
+                        TreeDescription = x.ProductDescription,
+                        TreePrice = x.ProductPrice,
+                        TreeImage = x.ProductImages.Select(z => z.ImagePath).Take(1)
+
+                    }).Take(5).ToArrayAsync();
+                return View(model);
+            }
+        }
+
+
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";

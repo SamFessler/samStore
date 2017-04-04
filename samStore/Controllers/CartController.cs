@@ -56,7 +56,7 @@ namespace samStore.Controllers
                 {
                     Product = new ProductModel
                     {
-                        Id = x.Product.ProductID,
+                        Id = x.Product.ID,
                         TreeDescription = x.Product.ProductDescription,
                         TreeName = x.Product.ProductName,
                         TreePrice = x.Product.ProductPrice,

@@ -17,7 +17,7 @@ namespace samStore.Controllers
 
 
         // GET: Product
-        [OutputCache(Duration = 300)]
+        //[OutputCache(Duration = 300)]
         public ActionResult Index(int? id)
         {
             using (SamStoreEntities entities = new SamStoreEntities())
