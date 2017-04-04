@@ -1,4 +1,5 @@
-﻿using System;
+﻿using My.AppStore.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -18,7 +19,7 @@ namespace samStore.Models
 
         public IEnumerable<string> TreeImage { get; set; }
 
-
+        public ReviewModel[] Reviews { get; set; }
 
 
 

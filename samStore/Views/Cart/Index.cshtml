@@ -17,6 +17,7 @@
         <tr>
             <th>Product Name</th>
             <th>Quantity</th>
+            <th></th>
             <th>Price</th>
         </tr>
     </thead>
@@ -26,8 +27,8 @@
             <tr>
                 <td>@item.Product.TreeName</td>
                 <td>@item.Quantity</td>
-                <td><button class="btn btn-default" id="removeCartItem">Remove</button></td>
-                <td>@item.Product.TreePrice.</td>
+                <td>@Html.ActionLink("Remove", "RemoveItem", "Cart", new { id = item.Product.Id}, new { @class = "btn btn-primary" })</td>
+                <td>@((item.Product.TreePrice ?? 0m).ToString("C"))</td>
             </tr>
         }
     </tbody>

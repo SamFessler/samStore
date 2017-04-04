@@ -16,18 +16,23 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.Orders)
+    @foreach (var item in Model.Orders.Reverse())
+    {
+        <tr>
+            <td>@item.Order.Id</td>
+            <td>@item.Order.EmailUsed</td>
+
+        </tr>
+
+        foreach (var product in @item.Order.Products)
         {
             <tr>
-                <td>@item.Order.OrderNumber</td>
-                <td>@item.Order.EmailUsed</td>
-                <td>@item.Order.ShippingAddress</td>
-                <td>@item.Order.TimeCompleted</td>
-                <td>@item.Order.Products</td>
-                <td></td>
-                
+                @*<td>@item.Order.ShippingAddress</td>*@
+                <td>@product.Product.ProductName</td>
+                <td>@product.Product.ProductPrice</td>
             </tr>
-        }
+             }
+         }
     </tbody>
 </table>
 

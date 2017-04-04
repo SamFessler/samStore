@@ -1,7 +1,6 @@
 ﻿CREATE TABLE [dbo].[Product]
 (
 	[ID] INT IDENTITY(1,1) NOT NULL,
-	[ProductID] Int NULL,
 	[ProductName] NVARCHAR (500) NOT NULL,
 	[ProductDescription] NTEXT NOT NULL,
 

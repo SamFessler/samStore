@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using samStore.Models;
+using My.AppStore.Models;
 
 namespace samStore.Controllers
 {
@@ -30,6 +31,15 @@ namespace samStore.Controllers
                     model.TreePrice = product.ProductPrice;
                     model.TreeName = product.ProductName;
                     model.TreeImage = product.ProductImages.Select(x => x.ImagePath).ToArray();
+
+                    model.Reviews = product.Reviews.Select(x => new ReviewModel
+                    {
+                        UserEmail = x.Email,
+                        ID = x.ID,
+                        Rating = x.Rating,
+                        Body = x.Body
+                    }).ToArray();
+
                     return View(model);
                 }
                 else
@@ -64,7 +74,7 @@ namespace samStore.Controllers
                         o.ModifiedDate = DateTime.Now;
 
                     }
-                    var product = o.OrderProducts.FirstOrDefault(x => x.ProductID == model.Id);
+                    var product = o.OrderProducts.FirstOrDefault(x => x.Product.ID == model.Id);
                     if (product == null)
                     {
                         product = new OrderProduct();
@@ -111,7 +121,7 @@ namespace samStore.Controllers
                     product.Quantity += 1;
                 }
                 entities.SaveChanges();
-                ViewBag.ItemsInCart += 1;
+
                 TempData.Add("AddedToCart", true);
             }
 

@@ -51,6 +51,8 @@ namespace samStore.Controllers
                             o.ModifiedDate = DateTime.Now;
                             o.CreatedDate = DateTime.Now;
                             o.Completed = DateTime.Now;
+
+
                             o.OrderNumber = Guid.NewGuid();
                             currentUser.Orders.Add(o);
                             entities.SaveChanges();
@@ -93,7 +95,7 @@ namespace samStore.Controllers
                      
                     o.Address1 = newShippingAddress;
                      
-                    WhereTo = "\n Your Order will be shipped to the following address: \n"+model.ShippingAddress1 + "\n "+ model.ShippingAddress2 +"\n "+ model.ShippingCity+"\n " + model.ShippingState +"\n "+ model.ShippingZip;
+                    WhereTo = ("\n Your Order will be shipped to the following address: \n"+model.ShippingAddress1 + "\n "+ model.ShippingAddress2 +"\n "+ model.ShippingCity+"\n " + model.ShippingState +"\n "+ model.ShippingZip);
                     //entities.sp_CompleteOrder(o.ID);
 
 
@@ -173,7 +175,8 @@ namespace samStore.Controllers
 
 
 
-                return RedirectToAction("index", "Home");
+                return RedirectToAction("profile","Home");
+
 
             }
             return View(model);

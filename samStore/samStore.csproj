@@ -181,6 +181,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\ProductsAdminController.cs" />
+    <Compile Include="Controllers\ReviewsController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -209,6 +210,7 @@
       <DependentUpon>SamStoreEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CheckoutModel.cs" />
+    <Compile Include="Models\ForgotPasswordViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\Order.cs">
@@ -232,6 +234,7 @@
     <Compile Include="Models\Review.cs">
       <DependentUpon>SamStoreEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ReviewModel.cs" />
     <Compile Include="Models\SamStoreEntities.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -342,7 +345,14 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\ConfirmSent.cshtml" />
     <Content Include="Views\Home\Profile.cshtml" />
-    <Content Include="Views\Account\ResetPassword.cshtml" />
+    <Content Include="Views\Account\ResetPasswordPage.cshtml" />
+    <Content Include="Views\Account\ForgotPassword.cshtml" />
+    <Content Include="Views\Account\ResetSent.cshtml" />
+    <Content Include="Views\Reviews\Create.cshtml" />
+    <Content Include="Views\Reviews\Delete.cshtml" />
+    <Content Include="Views\Reviews\Details.cshtml" />
+    <Content Include="Views\Reviews\Edit.cshtml" />
+    <Content Include="Views\Reviews\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

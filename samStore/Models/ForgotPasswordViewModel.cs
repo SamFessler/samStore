@@ -5,10 +5,8 @@ using System.Web;
 
 namespace samStore.Models
 {
-    public class CartItemModel
+    public class ForgotPasswordViewModel
     {
-      public ProductModel Product { get; set; }
-      public int? Quantity { get; set; }
-
+        public string Email { get; set; }
     }
 }

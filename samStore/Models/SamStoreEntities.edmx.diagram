@@ -7,13 +7,13 @@
       <Diagram DiagramId="04f040ec24064700ae4b6c4ced6a270c" Name="Diagram1">
         <EntityTypeShape EntityType="SamStoreModel.Address" Width="1.5" PointX="5.25" PointY="7.625" />
         <EntityTypeShape EntityType="SamStoreModel.AspNetRole" Width="1.5" PointX="0.75" PointY="5.875" />
-        <EntityTypeShape EntityType="SamStoreModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="2.375" />
-        <EntityTypeShape EntityType="SamStoreModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="5" />
+        <EntityTypeShape EntityType="SamStoreModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="4.875" />
+        <EntityTypeShape EntityType="SamStoreModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="2.375" />
         <EntityTypeShape EntityType="SamStoreModel.AspNetUser" Width="1.5" PointX="3" PointY="4.5" />
         <EntityTypeShape EntityType="SamStoreModel.Category" Width="1.5" PointX="7.5" PointY="10.625" />
         <EntityTypeShape EntityType="SamStoreModel.CategoryProduct" Width="1.5" PointX="9.75" PointY="1.625" />
         <EntityTypeShape EntityType="SamStoreModel.Order" Width="1.5" PointX="7.5" PointY="5.75" />
-        <EntityTypeShape EntityType="SamStoreModel.OrderProduct" Width="1.5" PointX="9.75" PointY="6.5" />
+        <EntityTypeShape EntityType="SamStoreModel.OrderProduct" Width="1.5" PointX="9.75" PointY="6.375" />
         <EntityTypeShape EntityType="SamStoreModel.Product" Width="1.5" PointX="7.5" PointY="0.75" />
         <EntityTypeShape EntityType="SamStoreModel.ProductImage" Width="1.5" PointX="9.75" PointY="10.5" />
         <EntityTypeShape EntityType="SamStoreModel.Review" Width="1.5" PointX="9.75" PointY="13.625" />

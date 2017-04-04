@@ -5,11 +5,13 @@
     @if (User.Identity.IsAuthenticated)
     {
         <li>@Html.ActionLink("Logout as "+User.Identity.Name,"Logout","Account")</li>
+        <li>@Html.ActionLink("Profile","Profile","Home")</li>
     }
     else
     {
         <li>@Html.ActionLink("Login", "Login", "Account")</li>
         <li>@Html.ActionLink("Register", "Register", "Account")</li>
+        
     }
 
 </ul>

@@ -31,73 +31,7 @@ namespace samStore.Controllers
             return View(new RegisterModel());
         }
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //[AllowAnonymous]
-        ////[RecaptchaControlMvc.CaptchaValidator]
-        //public virtual async Task<ActionResult> ResetPassword(
-        //                                      ResetPasswordViewModel rpvm)
-        //{
-        //    string message = null;
-        //    //the token is valid for one day
-        //    var until = DateTime.Now.AddDays(1);
-        //    //We find the user, as the token can not generate the e-mail address, 
-        //    //but the name should be.
-        //    var db = new Context();
-        //    var user = db.Users.SingleOrDefault(x => x.Email == rpvm.Email);
-
-        //    var token = new StringBuilder();
-
-        //    //Prepare a 10-character random text
-        //    using (RNGCryptoServiceProvider
-        //                        rngCsp = new RNGCryptoServiceProvider())
-        //    {
-        //        var data = new byte[4];
-        //        for (int i = 0; i < 10; i++)
-        //        {
-        //            //filled with an array of random numbers
-        //            rngCsp.GetBytes(data);
-        //            //this is converted into a character from A to Z
-        //            var randomchar = Convert.ToChar(
-        //                                      //produce a random number 
-        //                                      //between 0 and 25
-        //                                      BitConverter.ToUInt32(data, 0) % 26
-        //                                      //Convert.ToInt32('A')==65
-        //                                      + 65
-        //                             );
-        //            token.Append(randomchar);
-        //        }
-        //    }
-        //    //This will be the password change identifier 
-        //    //that the user will be sent out
-        //    var tokenid = token.ToString();
-
-        //    if (null != user)
-        //    {
-        //        //Generating a token
-        //        var result = await IdentityManager
-        //                                .Passwords
-        //                                .GenerateResetPasswordTokenAsync(
-        //                                              tokenid,
-        //                                              user.UserName,
-        //                                              until
-        //                           );
-
-        //        if (result.Success)
-        //        {
-        //            //send the email
-
-        //        }
-        //    }
-        //    message =
-        //        "We have sent a password reset request if the email is verified.";
-        //    return RedirectToAction(
-        //                   samStore.AccountController.ResetPasswordWithToken(
-        //                               token: string.Empty,
-        //                               message: message
-        //                   )
-        //           );
-        //}
+  
 
 
         [HttpPost]
@@ -194,6 +128,8 @@ namespace samStore.Controllers
             return View(new LoginModel());
         }
 
+
+
         public ActionResult ConfirmSent()
         {
             return View();
@@ -222,6 +158,105 @@ namespace samStore.Controllers
             return RedirectToAction("Index", "Home");
 
         }
+
+        public ActionResult Ok()
+        {
+            return View();
+        }
+
+        public ActionResult ForgotPassword()
+        {
+            return View(new ForgotPasswordViewModel());
+        }
+
+        public ActionResult ResetPasswordPage(string code, string email)
+        {
+            return View(new ResetPasswordViewModel(code,email));
+        }
+
+        public ActionResult ResetSent()
+        {
+            return View();
+        }
+
+
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                using (IdentityModels entities = new IdentityModels())
+                {
+
+                    var userStore = new UserStore<User>(entities);
+                    var manager = new UserManager<User>(userStore);
+
+                    manager.UserTokenProvider = new EmailTokenProvider<User>();
+
+                    var user = manager.FindByName(model.Email);
+                    // If user has to activate his email to confirm his account, the use code listing below
+                    //if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
+                    //{
+                    //    return Ok();
+                    //}
+                    
+
+                    string code = await manager.GeneratePasswordResetTokenAsync(user.Id);
+
+
+                    string sendGridKey = System.Configuration.ConfigurationManager.AppSettings["SendGrid.ApiKey"];
+                    SendGrid.SendGridClient client = new SendGrid.SendGridClient(sendGridKey);
+                    SendGrid.Helpers.Mail.SendGridMessage message = new SendGrid.Helpers.Mail.SendGridMessage();
+                    message.Subject = string.Format("Reset Password");
+                    message.From = new SendGrid.Helpers.Mail.EmailAddress("Admin@apples4pears.net", "Art Of Bonsai Admin");
+                    message.AddTo(new SendGrid.Helpers.Mail.EmailAddress(model.Email));
+
+                    SendGrid.Helpers.Mail.Content contents = new SendGrid.Helpers.Mail.Content("text/html", string.Format("<a href=\"{0}\">Reset Your Password</a>", Request.Url.GetLeftPart(UriPartial.Authority) + "/Account/ResetPasswordPage/" + code + "?EmailAddress=" + model.Email ));
+
+                    message.AddContent(contents.Type, contents.Value);
+                    SendGrid.Response response =  await client.SendEmailAsync(message);
+
+                    //await client.SendEmailAsync(user.Id, "Reset Password", $"Please reset your password by using this {code}");
+                    return RedirectToAction("ResetSent");
+                }
+                
+            }
+            return View();
+
+            // If we got this far, something failed, redisplay form
+
+        }
+
+        public ActionResult ResetPassword(string code, string email, string NewPassword)
+        {
+            using (IdentityModels entities = new IdentityModels())
+            {
+                var userStore = new UserStore<User>(entities);
+
+                var manager = new UserManager<User>(userStore);
+                var user = manager.FindByName(email);
+
+                manager.UserTokenProvider = new EmailTokenProvider<User>();
+
+                
+
+                if (user != null)
+                {
+                    var result = manager.ResetPassword(user.Id, code, NewPassword);
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction("Login");
+                    }
+
+                }
+            }
+
+            return RedirectToAction("Index", "Home");
+
+        }
+
 
         //public ActionResult Reset(string id, string email)
         //{

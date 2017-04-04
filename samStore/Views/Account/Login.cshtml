@@ -21,9 +21,12 @@
     @Html.PasswordFor(x => x.Password)
     @Html.ValidationMessageFor(x => x.Password)
 
-
+    
     <input type="submit" value="Login" />
+    @Html.ActionLink("Create New Account", "Register", "Account", new { @class = "btn btn-primary" })
 }
+
+<input type="button" value="ForgotPassword"  onclick="location.href='@Url.Action("ForgotPassword", "Account")'"/>
 
 
 <h2>Login</h2>

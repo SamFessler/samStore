@@ -12,6 +12,11 @@ namespace samStore.Controllers
     [CartItemCalculator]
     public class HomeController : Controller
     {
+        OrderContainerModel ModelList = new OrderContainerModel();
+
+        SamStoreEntities entities = new SamStoreEntities();
+
+
         public ActionResult Index()
         {
             return View();
@@ -34,26 +39,28 @@ namespace samStore.Controllers
         [ActionName("Profile")]
         public ActionResult ProfileAction()
         {
-            OrderContainerModel ModelList = new OrderContainerModel();
-
-            using (SamStoreEntities entities = new SamStoreEntities())
-            {
-
                 if (User.Identity.IsAuthenticated)
                 {
                     AspNetUser currentUser = entities.AspNetUsers.Single(x => x.UserName == User.Identity.Name);
-
                     
-                    ModelList.Orders = currentUser.Orders.Select(x => new OrderUserModel
+                    
+                    ModelList.Orders = currentUser.Orders.Select(x =>  new OrderUserModel  
                     {
                         Order = new OrderModel
                         {
                             Id = x.ID,
-                            ShippingAddress = x.Address.ShippingAddress1,
+                            //ShippingAddress = x.Address.ShippingAddress1,
                             EmailUsed = x.PurchaserEmail,
-                            TimeCompleted = x.Completed.ToString(),
+                           
+
                             Products = x.OrderProducts.Select(y => new OrderProduct {
-                                Product = new Product { ProductName = y.Product.ProductName, ProductPrice = y.Product.ProductPrice   }
+                                Product = new Product
+                                {
+                                    ProductName = y.Product.ProductName,
+                                    ProductPrice = y.Product.ProductPrice
+                                },
+                                 Quantity = y.Quantity,
+                               
 
                             })
                           
@@ -61,11 +68,27 @@ namespace samStore.Controllers
                         },
 
                     }).ToArray();
+
+                    
                 }
-            }
+
+
+            
+
+
             ViewBag.Message = "Your Profile";
             return View(ModelList);
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                entities.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
     }
 
    

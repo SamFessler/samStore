@@ -19,6 +19,7 @@ namespace samStore.Models
         public int Quantity { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
+        public decimal SubTotal { get; set; }
     
         public virtual Order Order { get; set; }
         public virtual Product Product { get; set; }
