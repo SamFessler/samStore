@@ -116,30 +116,25 @@ body {
 }
 
 #banner {
-    background-image:url('http://bonsaibark.com/wp-content/uploads/Taikan91.jpg');
+    background:url('http://bonsaibark.com/wp-content/uploads/Taikan91.jpg');
     width:100%;
 }
-a{
-    color: #A72C23;
-    text-decoration-color: #A72C23;
-}
 
-#titleAllWrapper{
-
-    width: 100%;
-    height: 100%;
-}
 
 #leftSidebar{
  min-width: 980px;
  height: 100%;
- background-image: url(Content/Images/TreeNoBack.png);
+ background: url('../../Content/Images/TreeNoBack.png');
 }
 #rightSidebar{
  min-width: 980px;
  height: 100%;
- background-image: url(Content/Images/TreeNoBack.png);
+ background: url('../../Content/Images/TreeNoBack.png');
 }
+
+div.image {
+   content:url(http://placehold.it/350x150);
+}​
 
 .loginCenter{
     align-content: center;
@@ -158,4 +153,15 @@ a{
     text-decoration-color: #A72C23;
  
 
+}
+
+a{
+    color: #A72C23;
+    text-decoration-color: #A72C23;
+}
+
+#titleAllWrapper{
+
+    width: 100%;
+    height: 100%;
 }
